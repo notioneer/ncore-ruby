@@ -23,9 +23,6 @@ Or install it yourself as:
 
     $ gem install ncore
 
-## Usage
-
-TODO: Write usage instructions here
 
 ## Contributing
 

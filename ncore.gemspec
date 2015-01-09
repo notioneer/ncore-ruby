@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tm@notioneer.com"]
   spec.description   = %q{NCore - Ruby gem useful for building REST API clients}
   spec.summary       = %q{NCore - Gem for building REST API clients}
-  spec.homepage      = "https://github.com/notioneer/ncore-ruby"
+  spec.homepage      = 'http://notioneer.com/'
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
