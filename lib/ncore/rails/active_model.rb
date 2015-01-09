@@ -6,6 +6,7 @@ module NCore
 
     included do
       include ::ActiveModel::Conversion
+      extend  ::ActiveModel::Naming
       extend  ::ActiveModel::Translation
       alias :errors :errors_for_actionpack
     end
