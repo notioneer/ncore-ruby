@@ -28,7 +28,7 @@ module NCore
     end
 
     def url
-      "#{self.class.url}/#{CGI.escape id||'-'}"
+      "#{self.class.url}/#{CGI.escape((id||'-').to_s)}"
     end
 
   end

@@ -3,9 +3,16 @@ module NCore
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def delete(id, params={}, api_creds=nil)
+      def delete!(id, params={}, api_creds=nil)
         obj = new({id: id}, api_creds)
         obj.delete(params) || raise(parent::RecordInvalid, obj)
+      end
+
+      # always returns a new object; check .errors? or .valid? to see how it went
+      def delete(id, params={}, api_creds=nil)
+        obj = new({id: id}, api_creds)
+        obj.delete(params)
+        obj
       end
     end
 

@@ -20,8 +20,6 @@ module NCore
       class_eval <<-M2, __FILE__, __LINE__+1
         def find_#{assoc.singularize}(aid, params={})
           raise UnsavedObjectError unless id
-          ## #{assoc}.detect{|o| o.id == aid} || raise(RecordNotFound)
-          # @attribs[:#{assoc}].detect{|o| o.id == aid} || #{klass}.find(aid, {#{key}: id}, api_creds)
           #{klass}.find(aid, {#{key}: id}.reverse_merge(params), api_creds)
         end
       M2
@@ -52,6 +50,20 @@ module NCore
           obj.save!(params)
         end
       M6
+      # will always return the object; check .errors? or .valid? to see how it went
+      class_eval <<-M7, __FILE__, __LINE__+1
+        def delete_#{assoc.singularize}(aid, params={})
+          obj = find_#{assoc.singularize}(aid)
+          obj.delete(params)
+          obj
+        end
+      M7
+      class_eval <<-M8, __FILE__, __LINE__+1
+        def delete_#{assoc.singularize}!(aid, params={})
+          raise UnsavedObjectError unless id
+          #{klass}.delete!(aid, {#{key}: id}.reverse_merge(params), api_creds)
+        end
+      M8
     end
 
     def belongs_to(assoc, klass=nil)
