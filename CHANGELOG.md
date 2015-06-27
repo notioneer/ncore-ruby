@@ -8,6 +8,8 @@
       => pass credentials: {} instead of the final api_creds param
 - find(nil) now raises RecordNotFound instead of returning nil
 - Make <:assoc>_id=() writers private; shouldn't have been exposed to begin with.
+- Treat 409 like 422 and add error messages instead of raising an exception.
+- Add default error message for 409,422 if none received.
 
 #### 1.2.1
 

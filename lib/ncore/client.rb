@@ -209,7 +209,7 @@ module NCore
           raise parent::AccessDenied, "Access denied; check your API credentials and permissions."
         when 404
           raise parent::RecordNotFound
-        when 422
+        when 409, 422
           # pass through
         when 429
           raise parent::RateLimited
@@ -222,12 +222,12 @@ module NCore
       end
 
       def parse_response(response)
-        if [202, 204].include?(response.status) && response.body.blank?
-          return {data: {}, errors: {}, metadata: {}}
-        end
-      
         begin
-          json = MultiJson.load(response.body||'', symbolize_keys: false) || {}
+          if response.body.blank?
+            json = {}
+          else
+            json = MultiJson.load(response.body, symbolize_keys: false) || {}
+          end
           json = json.with_indifferent_access
         rescue MultiJson::DecodeError, MultiJson::LoadError
           raise parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
@@ -244,6 +244,9 @@ module NCore
           else
             metadata = nil
           end
+        end
+        if [409, 422].include?(response.status) && errors.empty?
+          errors.push 'Validation error'
         end
         {data: json, errors: errors, metadata: metadata}
       end
