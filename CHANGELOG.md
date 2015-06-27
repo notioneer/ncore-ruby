@@ -1,3 +1,14 @@
+#### 2.0.0.pre1
+
+- Change params and credentials parsing
+  This changes the signatures for request() and all crud methods:
+    request(method, url, credentials, params, headers)
+      => request(method, url, params: {}, headers: {}, credentials: {})
+    all(), find(), create(), update(), delete(), etc
+      => pass credentials: {} instead of the final api_creds param
+- find(nil) now raises RecordNotFound instead of returning nil
+- Make <:assoc>_id=() writers private; shouldn't have been exposed to begin with.
+
 #### 1.2.1
 
 - Connection errors should raise NCore::ConnectionError

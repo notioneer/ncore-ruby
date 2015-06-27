@@ -51,6 +51,28 @@ module NCore
           AD
         end
       end
+
+      def parse_request_params(params={}, opts={})
+        params = params.with_indifferent_access
+        req = params.delete(:request)
+        creds = params.delete(:credentials)
+        if opts[:json_root]
+          if params.key?(opts[:json_root])
+            o = params
+          else
+            o = {opts[:json_root] => params}.with_indifferent_access
+          end
+        else
+          o = params
+        end
+        o[:request] = req if req
+        o[:credentials] = creds if creds
+        o
+      end
+    end
+
+    def parse_request_params(params, opts={})
+      self.class.parse_request_params(params, opts)
     end
 
 

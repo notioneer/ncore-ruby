@@ -3,16 +3,17 @@ module NCore
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def find(params={}, api_creds=nil)
-        parsed, creds = request(:get, url, api_creds, params)
+      def find(params={})
+        params = parse_request_params(params)
+        parsed, creds = request(:get, url, params)
         if parsed[:errors].any?
           raise parent::QueryError, parsed[:errors]
         end
         new(parsed, creds)
       end
 
-      def retrieve(params={}, api_creds=nil)
-        find params, api_creds
+      def retrieve(params={})
+        find params
       rescue parent::RecordNotFound
         false
       end
@@ -25,7 +26,8 @@ module NCore
     private
 
     def reload(find_params={})
-      parsed, @api_creds = request(:get, url, api_creds, find_params)
+      params = parse_request_params(find_params).reverse_merge credentials: api_creds
+      parsed, @api_creds = request(:get, url, params)
       @attribs = {}.with_indifferent_access
       load(parsed)
     end

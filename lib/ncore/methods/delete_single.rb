@@ -3,14 +3,16 @@ module NCore
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def delete(params={}, api_creds=nil)
-        obj = new({}, api_creds)
+      def delete(params={})
+        params = parse_request_params(params)
+        obj = new({}, params[:credentials])
         obj.delete(params) || raise(parent::RecordInvalid, obj)
       end
     end
 
     def delete(params={})
-      parsed, @api_creds = request(:delete, url, api_creds, params)
+      params = parse_request_params(params).reverse_merge credentials: api_creds
+      parsed, @api_creds = request(:delete, url, params)
       load(parsed)
       errors.empty? ? self : false
     end

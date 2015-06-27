@@ -9,59 +9,74 @@ module NCore
         def #{assoc}(params={})
           return [] unless id
           reload = params.delete :reload
-          if params.empty?
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          cacheable = params.except(:credentials, :request).empty?
+          params.merge! #{key}: id
+          if cacheable
             # only cache unfiltered, default api call
-            @attribs[:#{assoc}] = (!reload && @attribs[:#{assoc}]) || #{klass}.all({#{key}: id}, api_creds)
+            @attribs[:#{assoc}] = (!reload && @attribs[:#{assoc}]) || #{klass}.all(params)
           else
-            #{klass}.all(params.merge(#{key}: id), api_creds)
+            #{klass}.all(params)
           end
         end
       M1
       class_eval <<-M2, __FILE__, __LINE__+1
         def find_#{assoc.singularize}(aid, params={})
           raise UnsavedObjectError unless id
-          #{klass}.find(aid, {#{key}: id}.reverse_merge(params), api_creds)
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.find(aid, params)
         end
       M2
       # will always return the object; check .errors? or .valid? to see how it went
       class_eval <<-M3, __FILE__, __LINE__+1
         def create_#{assoc.singularize}(params={})
           raise UnsavedObjectError unless id
-          #{klass}.create(params.merge(#{key}: id), api_creds)
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.create(params)
         end
       M3
       # will always return the object; check .errors? or .valid? to see how it went
       class_eval <<-M4, __FILE__, __LINE__+1
         def update_#{assoc.singularize}(aid, params={})
-          obj = find_#{assoc.singularize}(aid)
-          obj.update(params)
-          obj
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.update(aid, params)
         end
       M4
       class_eval <<-M5, __FILE__, __LINE__+1
         def create_#{assoc.singularize}!(params={})
           raise UnsavedObjectError unless id
-          #{klass}.create!(params.merge(#{key}: id), api_creds)
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.create!(params)
         end
       M5
       class_eval <<-M6, __FILE__, __LINE__+1
         def update_#{assoc.singularize}!(aid, params={})
-          obj = find_#{assoc.singularize}(aid)
-          obj.save!(params)
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.update!(aid, params)
         end
       M6
       # will always return the object; check .errors? or .valid? to see how it went
       class_eval <<-M7, __FILE__, __LINE__+1
         def delete_#{assoc.singularize}(aid, params={})
-          obj = find_#{assoc.singularize}(aid)
-          obj.delete(params)
-          obj
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.delete(aid, params)
         end
       M7
       class_eval <<-M8, __FILE__, __LINE__+1
         def delete_#{assoc.singularize}!(aid, params={})
           raise UnsavedObjectError unless id
-          #{klass}.delete!(aid, {#{key}: id}.reverse_merge(params), api_creds)
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params.merge! #{key}: id
+          #{klass}.delete!(aid, params)
         end
       M8
     end
@@ -73,11 +88,12 @@ module NCore
         attr :#{assoc}_id
         def #{assoc}(params={})
           return nil unless #{assoc}_id
-          if params.empty?
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          if params.except(:credentials, :request).empty?
             # only cache unfiltered, default api call
-            @attribs[:#{assoc}] ||= #{klass}.find(#{assoc}_id, {}, api_creds)
+            @attribs[:#{assoc}] ||= #{klass}.find(#{assoc}_id, params)
           else
-            #{klass}.find(#{assoc}_id, params, api_creds)
+            #{klass}.find(#{assoc}_id, params)
           end
         end
       M1
@@ -86,6 +102,7 @@ module NCore
           @attribs[:#{assoc}] = nil unless @attribs[:#{assoc}_id] == v
           @attribs[:#{assoc}_id] = v
         end
+        private :#{assoc}_id=
       M2
     end
 

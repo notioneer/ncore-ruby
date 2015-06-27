@@ -4,7 +4,13 @@ module NCore
 
     module ClassMethods
 
-      def request(method, url, request_credentials, params={}, headers={})
+      # opts - {params: {}, headers: {}, credentials: {}}
+      #   unknown keys assumed to be :params if :params is missing
+      def request(method, url, opts={})
+        request_credentials = opts.delete 'credentials'
+        headers = opts.delete('headers') || {}
+        params = opts['params'] || opts
+
         request_credentials ||= retrieve_credentials
         request_credentials = parse_credentials(request_credentials)
 

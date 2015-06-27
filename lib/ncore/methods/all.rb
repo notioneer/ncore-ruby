@@ -3,8 +3,9 @@ module NCore
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def all(params={}, api_creds=nil)
-        parsed, creds = request(:get, url, api_creds, params)
+      def all(params={})
+        params = parse_request_params(params)
+        parsed, creds = request(:get, url, params)
         if parsed[:errors].any?
           raise parent::QueryError, parsed[:errors]
         end
@@ -20,9 +21,9 @@ module NCore
         end
       end
 
-      def first(params={}, api_creds=nil)
+      def first(params={})
         params = params.with_indifferent_access.merge(max_results: 1)
-        all(params, api_creds).first
+        all(params).first
       end
     end
 

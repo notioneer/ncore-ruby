@@ -3,8 +3,9 @@ module NCore
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def build(params={}, api_creds=nil)
-        parsed, creds = request(:get, url+'/new', api_creds, params)
+      def build(params={})
+        params = parse_request_params(params)
+        parsed, creds = request(:get, url+'/new', params)
         if parsed[:errors].any?
           raise parent::QueryError, parsed[:errors]
         end

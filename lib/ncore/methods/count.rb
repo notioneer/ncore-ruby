@@ -3,8 +3,9 @@ module NCore
     extend ActiveSupport::Concern
 
     module ClassMethods
-      def count(params={}, api_creds=nil)
-        parsed, _ = request(:get, "#{url}/count", api_creds, params)
+      def count(params={})
+        params = parse_request_params(params)
+        parsed, _ = request(:get, "#{url}/count", params)
         parsed[:data][:count]
       end
     end
