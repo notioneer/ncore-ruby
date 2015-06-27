@@ -1,3 +1,5 @@
+require 'json'
+
 module NCore
   module Client
     extend ActiveSupport::Concern
@@ -27,7 +29,11 @@ module NCore
           path += qs
           payload = nil
         else
-          payload = MultiJson.encode params
+          if defined? MultiJson
+            payload = MultiJson.encode params
+          else
+            payload = JSON.generate params
+          end
         end
 
         rest_opts = {
@@ -222,16 +228,24 @@ module NCore
       end
 
       def parse_response(response)
-        begin
-          if response.body.blank?
-            json = {}
+        if response.body.blank?
+          json = {}
+        else
+          if defined? MultiJson
+            begin
+              json = MultiJson.load(response.body, symbolize_keys: false) || {}
+            rescue MultiJson::ParseError
+              raise parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
+            end
           else
-            json = MultiJson.load(response.body, symbolize_keys: false) || {}
+            begin
+              json = JSON.parse(response.body, symbolize_names: false) || {}
+            rescue JSON::ParserError
+              raise parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
+            end
           end
-          json = json.with_indifferent_access
-        rescue MultiJson::DecodeError, MultiJson::LoadError
-          raise parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
         end
+        json = json.with_indifferent_access
         errors = json.delete(:errors) || []
         if errors.any?
           errors = errors.values.flatten
@@ -292,7 +306,11 @@ DBG
 
       def debug_response(response)
         return unless logger.debug?
-        json = MultiJson.load(response.body||'', symbolize_keys: false) rescue response.body
+        if defined? MultiJson
+          json = MultiJson.load(response.body||'', symbolize_keys: false) rescue response.body
+        else
+          json = JSON.parse(response.body||'', symbolize_names: false) rescue response.body
+        end
         logger << <<-DBG
 RESPONSE:
   #{response.headers['Status']} | #{response.headers['Content-Type']} | #{response.body.size} bytes

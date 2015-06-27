@@ -10,6 +10,8 @@
 - Make <:assoc>_id=() writers private; shouldn't have been exposed to begin with.
 - Treat 409 like 422 and add error messages instead of raising an exception.
 - Add default error message for 409,422 if none received.
+- Make MultiJson optional - use it if present, otherwise default to stdlib JSON.
+  If using MultiJson, requires v1.9+.
 
 #### 1.2.1
 
