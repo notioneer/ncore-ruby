@@ -1,3 +1,6 @@
+#### 2.0.0.pre2
+- Improve header handling for requests
+
 #### 2.0.0.pre1
 
 - Change params and credentials parsing

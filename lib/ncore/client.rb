@@ -9,6 +9,7 @@ module NCore
       # opts - {params: {}, headers: {}, credentials: {}}
       #   unknown keys assumed to be :params if :params is missing
       def request(method, url, opts={})
+        opts = opts.with_indifferent_access
         request_credentials = opts.delete 'credentials'
         headers = opts.delete('headers') || {}
         params = opts['params'] || opts
@@ -77,8 +78,8 @@ module NCore
         h = {}
         [default_headers, auth_headers(req_credentials), headers].each do |set|
           set.each do |k,v|
-            k = k.to_s.titlecase.gsub(/ /,'-')
-            h[k] = v
+            k = k.to_s.tr('_','-').gsub(%r{(^|-)\w}){$&.upcase}
+            h[k] = v.respond_to?(:call) ? v.call : v
           end
         end
         h
@@ -314,7 +315,7 @@ DBG
         logger << <<-DBG
 RESPONSE:
   #{response.headers['Status']} | #{response.headers['Content-Type']} | #{response.body.size} bytes
-  #{response.headers.except('Status', 'Connection', 'Content-Type', 'X-Request-Id').map{|h,d| "#{h}: #{d}"}.join("\n  ")}
+  #{response.headers.except('Status', 'Connection', 'Content-Type').map{|h,d| "#{h}: #{d}"}.join("\n  ")}
   #{json.pretty_inspect.split("\n").join("\n  ")}
 #{'-=- '*18}
 DBG
