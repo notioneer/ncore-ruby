@@ -28,5 +28,9 @@ module NCore
       errors.empty? ? self : false
     end
 
+    def delete!(params={})
+      delete(params) || raise(self.class.parent::RecordInvalid, self)
+    end
+
   end
 end

@@ -1,3 +1,6 @@
+#### 2.0.0.pre3
+- Add #update!(), #delete!()
+
 #### 2.0.0.pre2
 - Improve header handling for requests
 
