@@ -212,6 +212,8 @@ module NCore
         case response.status
         when 401 # API auth valid; API call itself is an auth-related call and failed
           raise parent::AuthenticationFailed
+        when 402
+          raise parent::AccountInactive, "Account inactive; login to portal to check account status."
         when 403 # API auth failed or insufficient permissions
           raise parent::AccessDenied, "Access denied; check your API credentials and permissions."
         when 404

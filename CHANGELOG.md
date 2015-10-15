@@ -1,3 +1,6 @@
+#### 2.0.0.pre4
+- Add AccountInactive exception for 402 errors
+
 #### 2.0.0.pre3
 - Add #update!(), #delete!()
 

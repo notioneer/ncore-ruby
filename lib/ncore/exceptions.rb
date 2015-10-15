@@ -7,6 +7,7 @@ module NCore
         class Error < StandardError ; end
 
         class AccessDenied < Error ; end
+        class AccountInactive < Error ; end
         class AuthenticationFailed < Error ; end
         class ConnectionError < Error ; end
         class RateLimited < Error ; end
