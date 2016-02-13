@@ -6,7 +6,7 @@ require 'ncore/version'
 Gem::Specification.new do |spec|
   spec.name          = "ncore"
   spec.version       = NCore::VERSION
-  spec.authors       = ["thomas morgan"]
+  spec.authors       = ["Notioneer Team"]
   spec.email         = ["hello@notioneer.com"]
   spec.description   = %q{NCore - Ruby gem useful for building REST API clients}
   spec.summary       = %q{NCore - Gem for building REST API clients}
@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'activesupport', '>= 3.2', '< 5.0'
+  spec.add_dependency 'activesupport', '>= 3.2', '< 5.1'
   spec.add_dependency 'excon', '~> 0.32'
 
   spec.add_development_dependency "bundler", "~> 1.3"

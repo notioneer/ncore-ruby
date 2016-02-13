@@ -1,14 +1,6 @@
-#### 2.0.0.pre4
-- Add AccountInactive exception for 402 errors
+#### 2.0.0
 
-#### 2.0.0.pre3
-- Add #update!(), #delete!()
-
-#### 2.0.0.pre2
-- Improve header handling for requests
-
-#### 2.0.0.pre1
-
+- NOTE: This version includes breaking changes.
 - Change params and credentials parsing
   This changes the signatures for request() and all crud methods:
     request(method, url, credentials, params, headers)
@@ -21,6 +13,9 @@
 - Add default error message for 409,422 if none received.
 - Make MultiJson optional - use it if present, otherwise default to stdlib JSON.
   If using MultiJson, requires v1.9+.
+- Improve header handling for requests
+- Add #update!(), #delete!()
+- Add AccountInactive exception for 402 errors
 
 #### 1.2.1
 
