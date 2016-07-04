@@ -38,6 +38,7 @@ module NCore
           end
         end
 
+        class BulkActionError < QueryError ; end
         class ValidationError < QueryError ; end
       INCL
     end

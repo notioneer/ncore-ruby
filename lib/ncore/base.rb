@@ -18,6 +18,7 @@ module NCore
         include Count  if types.include? :count
         include Create if types.include? :create
         include Delete if types.include? :delete
+        include DeleteBulk if types.include? :delete_bulk
         include Find   if types.include? :find
         include Update if types.include? :update
       end

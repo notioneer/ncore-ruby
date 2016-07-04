@@ -7,7 +7,7 @@ require 'pp'
   require "ncore/#{f}"
 end
 
-%w(all build count create delete delete_single find find_single update).each do |f|
+%w(all build count create delete delete_bulk delete_single find find_single update).each do |f|
   require "ncore/methods/#{f}"
 end
 
