@@ -262,6 +262,9 @@ module NCore
             metadata = nil
           end
         end
+        if response.status == 215
+          metadata, json = json, {}.with_indifferent_access
+        end
         if [409, 422].include?(response.status) && errors.empty?
           errors.push 'Validation error'
         end
