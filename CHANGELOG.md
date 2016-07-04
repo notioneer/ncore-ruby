@@ -1,6 +1,7 @@
 #### 2.0.1
 - Add .bulk_delete and bulk_delete!
 - Handle 215 response code
+- Better handle network error
 
 #### 2.0.0
 

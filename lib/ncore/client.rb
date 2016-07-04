@@ -194,7 +194,7 @@ module NCore
           case e.message
           when /Unable to verify certificate/
             raise parent::ConnectionError, "Unable to verify certificate for #{host_for_error rest_opts[:url]} : verify URL or disable SSL certificate verification (insecure)."
-          when /Name or service not known/
+          when /Name or service not known/, /No address associated with hostname/
             raise parent::ConnectionError, "DNS error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
           when /Errno::ECONNREFUSED/
             raise parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
