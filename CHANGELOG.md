@@ -1,3 +1,7 @@
+#### 2.0.2
+- Resource.new now handles credentials: {} as part of attribute hash
+  Brings parity with other resource methods
+
 #### 2.0.1
 - Add .bulk_delete and bulk_delete!
 - Handle 215 response code

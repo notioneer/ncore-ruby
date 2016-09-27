@@ -81,10 +81,11 @@ module NCore
 
 
     def initialize(attribs={}, api_creds=nil)
-      @attribs = {}.with_indifferent_access
-      @api_creds = api_creds
+      @attribs   = {}.with_indifferent_access
+      attribs    = attribs.dup.with_indifferent_access
+      creds_attr = attribs.delete(:credentials)
+      @api_creds = api_creds || creds_attr
 
-      attribs = attribs.dup.with_indifferent_access
       if attribs.keys.sort == %w(data error metadata)
         load_attrs = attribs
       else
