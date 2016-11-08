@@ -1,6 +1,5 @@
 require 'active_support/all'
 require 'excon'
-require 'multi_json'
 require 'pp'
 
 %w(version builder configuration associations attributes client collection exceptions identity lifecycle util base singleton_base).each do |f|

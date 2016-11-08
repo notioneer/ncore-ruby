@@ -1,3 +1,6 @@
+#### 2.0.3
+- Fix incorrect dependency on MultiJson
+
 #### 2.0.2
 - Resource.new now handles credentials: {} as part of attribute hash
   Brings parity with other resource methods
