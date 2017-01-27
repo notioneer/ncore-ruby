@@ -1,3 +1,6 @@
+#### 2.0.4
+- Better handle network error
+
 #### 2.0.3
 - Fix incorrect dependency on MultiJson
 

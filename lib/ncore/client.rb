@@ -175,7 +175,7 @@ module NCore
             begin
               tries += 1
               response = connection.request rest_opts.except(:url)
-            rescue Excon::Errors::SocketError, Errno::EADDRNOTAVAIL => e
+            rescue Excon::Errors::SocketError, Excon::Error::Timeout, Errno::EADDRNOTAVAIL => e
               # retry when keepalive was closed
               if tries <= 1 #&& e.message =~ /end of file reached/
                 retry
@@ -190,6 +190,13 @@ module NCore
           raise parent::ConnectionError, "Connection reset for #{host_for_error rest_opts[:url]} : check network or visit #{status_page}."
         rescue Errno::ECONNREFUSED
           raise parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+        rescue Excon::Error::Timeout => e
+          case e.message
+          when /timeout reached/
+            raise parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+          else
+            raise e
+          end
         rescue Excon::Errors::SocketError => e
           case e.message
           when /Unable to verify certificate/
