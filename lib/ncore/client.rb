@@ -261,6 +261,7 @@ module NCore
           errors = errors.values.flatten
           metadata, json = json, {}
         else
+          errors = []
           if json[:collection]
             data = json.delete :collection
             metadata, json = json, data
