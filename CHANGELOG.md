@@ -1,3 +1,7 @@
+#### 2.0.6
+
+- Allow ActiveSupport 5.1
+
 #### 2.0.5
 
 - Fix handling of missing detailed error messages
