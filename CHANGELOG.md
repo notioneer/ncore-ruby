@@ -1,3 +1,7 @@
+#### 2.0.7
+
+- Accept ActionController::Parameters objects as attribute params
+
 #### 2.0.6
 
 - Allow ActiveSupport 5.1

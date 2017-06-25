@@ -10,4 +10,5 @@ end
   require "ncore/methods/#{f}"
 end
 
+require 'ncore/rails/action_controller' if defined?(::ActionController)
 require 'ncore/rails/active_model' if defined?(::ActiveModel)
