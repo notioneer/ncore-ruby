@@ -27,7 +27,7 @@ module NCore
         case val_or_enum
         when Hash
           if key = val_or_enum[:object]
-            discover_class(key).new val_or_enum, api_creds
+            discover_class(key).new({data: val_or_enum}, api_creds)
           else
             val_or_enum
           end

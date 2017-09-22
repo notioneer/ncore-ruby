@@ -1,3 +1,7 @@
+#### 2.0.8
+
+- Properly handle grandchild credentials objects
+
 #### 2.0.7
 
 - Accept ActionController::Parameters objects as attribute params
