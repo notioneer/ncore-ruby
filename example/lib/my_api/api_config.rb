@@ -27,6 +27,8 @@ module MyApi
 
     self.auth_header_prefix = 'X-MyApi'
 
+    # self.bearer_credential_key = :api_key
+
     self.credentials_error_message = %Q{Missing API credentials. Set default credentials using "MyApi.credentials = {api_user: YOUR_API_USER, api_key: YOUR_API_KEY}"}
   end
 

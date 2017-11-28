@@ -37,6 +37,8 @@ module NCore
         mattr_accessor :auth_header_prefix
         self.auth_header_prefix = 'X-Api'
 
+        mattr_accessor :bearer_credential_key
+
         mattr_accessor :credentials_error_message
         self.credentials_error_message = %Q{Missing API credentials. Set default credentials using "#{self.parent.name}.credentials = {api_user: YOUR_API_USER, api_key: YOUR_API_KEY}"}
 

@@ -283,7 +283,11 @@ module NCore
       def auth_headers(creds)
         creds.inject({}) do |h,(k,v)|
           if v.present?
-            h["#{auth_header_prefix}-#{k}"] = v 
+            if k == bearer_credential_key
+              h["Authorization"] = "Bearer #{v}"
+            else
+              h["#{auth_header_prefix}-#{k}"] = v 
+            end
           end
           h
         end

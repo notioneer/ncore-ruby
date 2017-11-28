@@ -1,3 +1,7 @@
+#### 2.1.0
+
+- Add ability to produce Authorization headers
+
 #### 2.0.8
 
 - Properly handle grandchild credentials objects
