@@ -1,3 +1,7 @@
+#### 2.1.1
+
+- Allow ActiveSupport 5.2
+
 #### 2.1.0
 
 - Add ability to produce Authorization headers
