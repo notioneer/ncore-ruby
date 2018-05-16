@@ -18,7 +18,7 @@ module NCore
         request_credentials = parse_credentials(request_credentials)
 
         base_url = request_credentials[:url] || retrieve_default_url
-        base_url << '/' unless base_url.ends_with?('/')
+        base_url += '/' unless base_url.ends_with?('/')
         url = base_url + url
 
         headers = build_headers(headers, request_credentials.except(:url))

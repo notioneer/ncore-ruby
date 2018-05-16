@@ -1,3 +1,7 @@
+#### 2.1.2
+
+- Fix URL processing when frozen
+
 #### 2.1.1
 
 - Allow ActiveSupport 5.2
