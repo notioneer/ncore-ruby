@@ -12,11 +12,7 @@ module NCore
         Collection.new.tap do |coll|
           coll.metadata = parsed[:metadata]
           parsed[:data].each do |hash|
-            if key = hash[:object]
-              coll << discover_class(key, self).new(hash.merge(metadata: parsed[:metadata]), creds)
-            else
-              coll << new(hash.merge(metadata: parsed[:metadata]), creds)
-            end
+            coll << factory(hash.merge(metadata: parsed[:metadata]), creds)
           end
         end
       end

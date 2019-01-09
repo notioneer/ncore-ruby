@@ -14,9 +14,8 @@ module NCore
       # always returns a new object; check .errors? or .valid? to see how it went
       def update(id, attribs)
         raise(parent::RecordNotFound, "Cannot update id=nil") if id.blank?
-        params = parse_request_params(attribs)
-        obj = new({id: id}, params[:credentials])
-        obj.update params
+        obj = new(id: id)
+        obj.update attribs
         obj
       end
     end

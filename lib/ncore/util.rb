@@ -38,6 +38,14 @@ module NCore
         end
       end
 
+      def factory(parsed, api_creds)
+        if key = (parsed[:data] || parsed)[:object]
+          discover_class(key, self).new(parsed, api_creds)
+        else
+          new(parsed, api_creds)
+        end
+      end
+
 
       private
 

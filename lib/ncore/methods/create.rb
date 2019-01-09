@@ -13,9 +13,8 @@ module NCore
 
       # always returns a new object; check .errors? or .valid? to see how it went
       def create(attribs={})
-        params = parse_request_params(attribs)
-        obj = new({}, params[:credentials])
-        obj.send :create, params
+        obj = new
+        obj.send :create, attribs
         obj
       end
     end

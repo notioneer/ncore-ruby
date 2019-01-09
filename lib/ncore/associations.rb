@@ -9,9 +9,9 @@ module NCore
         def #{assoc}(params={})
           return [] unless id
           reload = params.delete :reload
-          params = parse_request_params(params).reverse_merge credentials: api_creds
           cacheable = params.except(:credentials, :request).empty?
-          params.merge! #{key}: id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params[:#{key}] = id
           if cacheable
             # only cache unfiltered, default api call
             @attribs[:#{assoc}] = (!reload && @attribs[:#{assoc}]) || #{klass}.all(params)
@@ -24,7 +24,7 @@ module NCore
         def find_#{assoc.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.find(aid, params)
         end
       M2
@@ -33,7 +33,7 @@ module NCore
         def create_#{assoc.singularize}(params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.create(params)
         end
       M3
@@ -42,7 +42,7 @@ module NCore
         def update_#{assoc.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.update(aid, params)
         end
       M4
@@ -50,7 +50,7 @@ module NCore
         def create_#{assoc.singularize}!(params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.create!(params)
         end
       M5
@@ -58,7 +58,7 @@ module NCore
         def update_#{assoc.singularize}!(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.update!(aid, params)
         end
       M6
@@ -67,7 +67,7 @@ module NCore
         def delete_#{assoc.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.delete(aid, params)
         end
       M7
@@ -75,7 +75,7 @@ module NCore
         def delete_#{assoc.singularize}!(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params.merge! #{key}: id
+          params[:#{key}] = id
           #{klass}.delete!(aid, params)
         end
       M8

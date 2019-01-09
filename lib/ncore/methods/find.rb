@@ -5,15 +5,14 @@ module NCore
     module ClassMethods
       def find(id, params={})
         raise(parent::RecordNotFound, "Cannot find id=nil") if id.blank?
-        params = parse_request_params(params)
-        o = new({id: id}, params[:credentials])
+        o = new(id: id)
         o.reload(params)
       end
 
       def retrieve(id, params={})
         find id, params
       rescue parent::RecordNotFound
-        false
+        nil
       end
     end
 

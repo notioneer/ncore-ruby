@@ -4,9 +4,8 @@ module NCore
 
     module ClassMethods
       def delete(params={})
-        params = parse_request_params(params)
-        obj = new({}, params[:credentials])
-        obj.delete(params) || raise(parent::RecordInvalid, obj)
+        obj = new
+        obj.delete!(params)
       end
     end
 

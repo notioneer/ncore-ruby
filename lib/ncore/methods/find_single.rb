@@ -4,18 +4,14 @@ module NCore
 
     module ClassMethods
       def find(params={})
-        params = parse_request_params(params)
-        parsed, creds = request(:get, url, params)
-        if parsed[:errors].any?
-          raise parent::QueryError, parsed[:errors]
-        end
-        new(parsed, creds)
+        obj = new
+        obj.reload(params)
       end
 
       def retrieve(params={})
         find params
       rescue parent::RecordNotFound
-        false
+        nil
       end
     end
 
