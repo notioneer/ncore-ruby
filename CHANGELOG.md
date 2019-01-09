@@ -1,6 +1,5 @@
-#### 3.0.0
+#### 3.0.0.pre1
 
-- Always use ActiveModel
 - `#errors` is now always an ActiveModel::Errors instance
 - API response :errors may be hash or array
 - Better Ruby and ActiveModel integration
