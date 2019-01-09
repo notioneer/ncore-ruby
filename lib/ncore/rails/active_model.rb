@@ -1,5 +1,3 @@
-require 'active_model'
-
 module NCore
   module ActiveModel
     extend ActiveSupport::Concern
@@ -11,9 +9,9 @@ module NCore
       alias :errors :errors_for_actionpack
     end
 
-    if defined?(Rails)
+    if defined?(::Rails)
       def logger
-        Rails.logger
+        ::Rails.logger
       end
     end
 
@@ -40,6 +38,4 @@ module NCore
 
   end
 
-  Base.send :include, ActiveModel
-  SingletonBase.send :include, ActiveModel
 end

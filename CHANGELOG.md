@@ -1,3 +1,7 @@
+#### 3.0.0
+
+- Always use ActiveModel
+
 #### 2.1.2
 
 - Fix URL processing when frozen

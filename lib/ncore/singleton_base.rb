@@ -4,6 +4,7 @@ module NCore
 
     included do
       extend Associations
+      include ActiveModel
       include Attributes
       include Client
       include Identity

@@ -1,4 +1,5 @@
 require 'active_support/all'
+require 'active_model'
 require 'excon'
 require 'pp'
 
@@ -11,4 +12,4 @@ end
 end
 
 require 'ncore/rails/action_controller' if defined?(::ActionController)
-require 'ncore/rails/active_model' if defined?(::ActiveModel)
+require 'ncore/rails/active_model'
