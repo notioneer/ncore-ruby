@@ -2,6 +2,7 @@
 
 - Always use ActiveModel
 - `#errors` is now always an ActiveModel::Errors instance
+- API response :errors may be hash or array
 
 #### 2.1.2
 

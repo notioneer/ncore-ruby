@@ -258,7 +258,7 @@ module NCore
         json = json.with_indifferent_access
         errors = json.delete(:errors) || []
         if errors.any?
-          errors = errors.values.flatten
+          errors = errors.values.flatten if errors.is_a?(Hash)
           metadata, json = json, {}
         else
           errors = []
