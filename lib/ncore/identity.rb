@@ -15,8 +15,35 @@ module NCore
         class_name.underscore
       end
       alias :json_root :attrib_name
+
+      def i18n_scope
+        parent::Api.i18n_scope
+      end
+
+      # make NCore::SomeResource.model_name do the right thing
+      def model_name
+        ::ActiveModel::Name.new(self, nil, ::ActiveSupport::Inflector.demodulize(self))
+      end
+
     end
 
+
+    # from ActiveRecord::Core
+    def ==(comparison_object)
+      super ||
+        comparison_object.instance_of?(self.class) &&
+        !id.nil? &&
+        comparison_object.id == id
+    end
+    alias :eql? :==
+
+    def hash
+      if id
+        self.class.hash ^ id.hash
+      else
+        super
+      end
+    end
 
     def json_root
       self.class.json_root

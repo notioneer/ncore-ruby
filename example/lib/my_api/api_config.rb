@@ -21,6 +21,8 @@ module MyApi
 
     self.strict_attributes = false
 
+    self.i18n_scope = :my_api
+
     self.instrument_key = 'request.my_api'
 
     self.status_page = 'http://my.api.status.page'

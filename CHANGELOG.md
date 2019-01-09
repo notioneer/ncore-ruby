@@ -3,6 +3,10 @@
 - Always use ActiveModel
 - `#errors` is now always an ActiveModel::Errors instance
 - API response :errors may be hash or array
+- Better Ruby and ActiveModel integration
+  - #eql?, #==, #hash
+  - #model_name
+  - #i18n_scope, config via Api.i18n_scope=
 
 #### 2.1.2
 

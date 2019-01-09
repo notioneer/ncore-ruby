@@ -28,6 +28,9 @@ module NCore
         mattr_accessor :strict_attributes
         self.strict_attributes = true
 
+        mattr_accessor :i18n_scope
+        self.i18n_scope = :ncore
+
         mattr_accessor :instrument_key
         self.instrument_key = 'request.ncore'
 
