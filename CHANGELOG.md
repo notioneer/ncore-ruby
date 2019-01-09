@@ -7,6 +7,7 @@
   - #eql?, #==, #hash
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
+  - #cache_key, #cache_version, #cache_key_with_version
 
 #### 2.1.2
 
