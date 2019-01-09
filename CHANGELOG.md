@@ -9,6 +9,10 @@
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
 - Add #factory
+- Add RecordInvalid#errors
+
+DEPRECATION NOTICE
+- ValidationError is deprecated and will be removed in 3.1.
 
 #### 2.1.2
 

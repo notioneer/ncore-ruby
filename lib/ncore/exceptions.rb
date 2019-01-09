@@ -23,8 +23,12 @@ module NCore
             cl_name ||= object.class.class_name if object.class.respond_to?(:class_name)
             cl_name ||= object.name if object.respond_to?(:name)
             cl_name ||= object.class.name
-            msg = "\#{cl_name} Invalid: \#{@object.errors.to_a.join(' ')}"
+            msg = "\#{cl_name} Invalid: \#{object.errors.to_a.join(' ')}"
             super msg
+          end
+
+          def errors
+            object&.errors
           end
         end
 
