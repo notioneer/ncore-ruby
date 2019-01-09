@@ -1,6 +1,7 @@
 #### 3.0.0
 
 - Always use ActiveModel
+- `#errors` is now always an ActiveModel::Errors instance
 
 #### 2.1.2
 

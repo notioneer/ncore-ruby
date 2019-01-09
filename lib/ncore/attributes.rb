@@ -86,16 +86,11 @@ module NCore
       creds_attr = attribs.delete(:credentials)
       @api_creds = api_creds || creds_attr
 
-      if attribs.keys.sort == %w(data error metadata)
-        load_attrs = attribs
-      else
-        load_attrs = {
-          metadata: attribs.delete(:metadata),
-          errors: attribs.delete(:errors),
-          data: attribs.delete(:data) || attribs
-        }
-      end
-      load(load_attrs)
+      load(
+        metadata: attribs.delete(:metadata),
+        errors: attribs.delete(:errors),
+        data: attribs.delete(:data) || attribs
+      )
     end
 
 
@@ -150,10 +145,10 @@ module NCore
     end
 
 
-    def load(parsed)
-      self.metadata = parsed[:metadata] || {}.with_indifferent_access
-      self.errors = parsed[:errors] || {}.with_indifferent_access
-      parsed[:data].each do |k,v|
+    def load(data:, errors: nil, metadata: nil)
+      self.metadata = metadata || {}.with_indifferent_access
+      self.errors = parse_errors(errors)
+      data.each do |k,v|
         if respond_to? "#{k}="
           send "#{k}=", self.class.interpret_type(v, api_creds)
         else
@@ -161,6 +156,17 @@ module NCore
         end
       end
       self
+    end
+
+    def parse_errors(errors)
+      errors ||= []
+      if errors.is_a?(::ActiveModel::Errors)
+        errors
+      else
+        ::ActiveModel::Errors.new(self).tap do |e0|
+          errors.each{|msg| e0.add :base, msg }
+        end
+      end
     end
 
   end
