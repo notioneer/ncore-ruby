@@ -1,3 +1,8 @@
+#### 2.2.0
+
+- Allow ActiveSupport 6.0
+- Resolve deprecation messages on Ruby 2.6
+
 #### 2.1.2
 
 - Fix URL processing when frozen
