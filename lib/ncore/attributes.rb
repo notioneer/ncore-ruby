@@ -166,10 +166,14 @@ module NCore
   end
 
 
-  class BigMoney < BigDecimal
+  class BigMoney < SimpleDelegator
+
+    def initialize(*args, **kwargs)
+      __setobj__(BigDecimal(*args, **kwargs))
+    end
 
     def to_s
-      if (self % BigDecimal.new('0.01')) == 0
+      if (self % BigDecimal('0.01')) == 0
         '%.2f' % self
       else
         super
