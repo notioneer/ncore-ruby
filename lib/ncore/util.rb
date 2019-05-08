@@ -49,7 +49,7 @@ module NCore
 
       private
 
-      def discover_class(key, default_klass=parent::GenericObject)
+      def discover_class(key, default_klass=module_parent::GenericObject)
         klass_name = key.to_s.camelize.singularize
         begin
           "#{module_name}::#{klass_name}".constantize

@@ -6,7 +6,7 @@ module NCore
       def create!(attribs={})
         obj = create(attribs)
         if obj.errors?
-          raise parent::RecordInvalid, obj
+          raise module_parent::RecordInvalid, obj
         end
         obj
       end

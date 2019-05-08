@@ -17,7 +17,7 @@ module NCore
     end
 
     def delete!(params={})
-      delete(params) || raise(self.class.parent::RecordInvalid, self)
+      delete(params) || raise(self.class.module_parent::RecordInvalid, self)
     end
 
   end

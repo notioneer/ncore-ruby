@@ -7,7 +7,7 @@ module NCore
         params = parse_request_params(params)
         parsed, creds = request(:get, url+'/new', params)
         if parsed[:errors].any?
-          raise parent::QueryError, parsed[:errors]
+          raise module_parent::QueryError, parsed[:errors]
         end
         new(parsed, creds)
       end

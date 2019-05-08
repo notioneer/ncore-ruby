@@ -58,7 +58,7 @@ module NCore
 
       def retrieve_credentials
         if credentials.blank?
-          raise parent::Error, credentials_error_message
+          raise module_parent::Error, credentials_error_message
         end
         credentials
       end
@@ -69,7 +69,7 @@ module NCore
 
       def retrieve_default_url
         if default_url.blank?
-          raise parent::Error, credentials_error_message
+          raise module_parent::Error, credentials_error_message
         end
         default_url
       end
@@ -188,30 +188,30 @@ module NCore
             debug_response response if debug
           end
         rescue Errno::ECONNRESET
-          raise parent::ConnectionError, "Connection reset for #{host_for_error rest_opts[:url]} : check network or visit #{status_page}."
+          raise module_parent::ConnectionError, "Connection reset for #{host_for_error rest_opts[:url]} : check network or visit #{status_page}."
         rescue Errno::ECONNREFUSED
-          raise parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+          raise module_parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
         rescue Excon::Error::Timeout => e
           case e.message
           when /timeout reached/
-            raise parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+            raise module_parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
           else
             raise e
           end
         rescue Excon::Errors::SocketError => e
           case e.message
           when /Unable to verify certificate/
-            raise parent::ConnectionError, "Unable to verify certificate for #{host_for_error rest_opts[:url]} : verify URL or disable SSL certificate verification (insecure)."
+            raise module_parent::ConnectionError, "Unable to verify certificate for #{host_for_error rest_opts[:url]} : verify URL or disable SSL certificate verification (insecure)."
           when /Name or service not known/, /No address associated with hostname/
-            raise parent::ConnectionError, "DNS error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+            raise module_parent::ConnectionError, "DNS error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
           when /Errno::ECONNREFUSED/
-            raise parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+            raise module_parent::ConnectionError, "Connection error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
           else
             raise e
           end
         rescue SocketError => e
           if e.message =~ /nodename nor servname provided/
-            raise parent::ConnectionError, "DNS error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
+            raise module_parent::ConnectionError, "DNS error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
           else
             raise e
           end
@@ -219,21 +219,21 @@ module NCore
 
         case response.status
         when 401 # API auth valid; API call itself is an auth-related call and failed
-          raise parent::AuthenticationFailed
+          raise module_parent::AuthenticationFailed
         when 402
-          raise parent::AccountInactive, "Account inactive; login to portal to check account status."
+          raise module_parent::AccountInactive, "Account inactive; login to portal to check account status."
         when 403 # API auth failed or insufficient permissions
-          raise parent::AccessDenied, "Access denied; check your API credentials and permissions."
+          raise module_parent::AccessDenied, "Access denied; check your API credentials and permissions."
         when 404
-          raise parent::RecordNotFound
+          raise module_parent::RecordNotFound
         when 409, 422
           # pass through
         when 429
-          raise parent::RateLimited
+          raise module_parent::RateLimited
         when 400..499
-          raise parent::Error, "Client error: #{response.status}\n  #{response.body}"
+          raise module_parent::Error, "Client error: #{response.status}\n  #{response.body}"
         when 500..599
-          raise parent::Error, "Server error: #{response.status}\n  #{response.body}"
+          raise module_parent::Error, "Server error: #{response.status}\n  #{response.body}"
         end
         response
       end
@@ -246,13 +246,13 @@ module NCore
             begin
               json = MultiJson.load(response.body, symbolize_keys: false) || {}
             rescue MultiJson::ParseError
-              raise parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
+              raise module_parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
             end
           else
             begin
               json = JSON.parse(response.body, symbolize_names: false) || {}
             rescue JSON::ParserError
-              raise parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
+              raise module_parent::Error, "Unable to parse API response; HTTP status: #{response.status}; body: #{response.body.inspect}"
             end
           end
         end
@@ -302,7 +302,7 @@ module NCore
         else
           m = 'WARNNG: SSL cert verification is disabled.'
           unless verify_ssl
-            m += " Enable verification with: #{parent}::Api.verify_ssl = true."
+            m += " Enable verification with: #{module_parent}::Api.verify_ssl = true."
           end
           unless bundle_readable
             m += " Unable to read CA bundle #{ssl_cert_bundle}."

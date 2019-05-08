@@ -10,7 +10,7 @@ module NCore
 
       def retrieve(params={})
         find params
-      rescue parent::RecordNotFound
+      rescue module_parent::RecordNotFound
         nil
       end
     end

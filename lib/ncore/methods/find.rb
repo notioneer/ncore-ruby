@@ -4,14 +4,14 @@ module NCore
 
     module ClassMethods
       def find(id, params={})
-        raise(parent::RecordNotFound, "Cannot find id=nil") if id.blank?
+        raise(module_parent::RecordNotFound, "Cannot find id=nil") if id.blank?
         o = new(id: id)
         o.reload(params)
       end
 
       def retrieve(id, params={})
         find id, params
-      rescue parent::RecordNotFound
+      rescue module_parent::RecordNotFound
         nil
       end
     end

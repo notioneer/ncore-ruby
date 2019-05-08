@@ -13,3 +13,4 @@ end
 
 require 'ncore/rails/action_controller' if defined?(::ActionController)
 require 'ncore/rails/active_model'
+require 'ncore/rails/module_fix'

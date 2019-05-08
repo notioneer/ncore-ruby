@@ -17,7 +17,7 @@ module NCore
       alias :json_root :attrib_name
 
       def i18n_scope
-        parent::Api.i18n_scope
+        module_parent::Api.i18n_scope
       end
 
       # make NCore::SomeResource.model_name do the right thing

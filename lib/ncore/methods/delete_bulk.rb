@@ -4,12 +4,12 @@ module NCore
 
     module ClassMethods
       def bulk_delete!(ids, params={})
-        raise(parent::RecordNotFound, "ids must not be empty") if ids.blank?
+        raise(module_parent::RecordNotFound, "ids must not be empty") if ids.blank?
         params[:ids] = ids
         params = parse_request_params(params)
         parsed, creds = request(:delete, url, params)
         if parsed[:errors].any?
-          raise parent::BulkActionError, parsed[:errors]
+          raise module_parent::BulkActionError, parsed[:errors]
         else
           parsed[:metadata]
         end
@@ -17,7 +17,7 @@ module NCore
 
       def bulk_delete(ids, params={})
         bulk_delete!(ids, params)
-      rescue parent::RecordNotFound, parent::BulkActionError
+      rescue module_parent::RecordNotFound, module_parent::BulkActionError
         false
       end
     end
