@@ -1,3 +1,7 @@
+#### 2.2.1
+
+- Fix decimal attributes on Ruby <= 2.5.x
+
 #### 2.2.0
 
 - Allow ActiveSupport 6.0
