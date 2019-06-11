@@ -174,8 +174,8 @@ module NCore
 
   class BigMoney < SimpleDelegator
 
-    def initialize(*args, **kwargs)
-      __setobj__(BigDecimal(*args, **kwargs))
+    def initialize(*args)
+      __setobj__(BigDecimal(*args))
     end
 
     def to_s

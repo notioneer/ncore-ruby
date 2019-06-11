@@ -13,6 +13,15 @@
 DEPRECATION NOTICE
 - ValidationError is deprecated and will be removed in 3.1.
 
+#### 2.2.1
+
+- Fix decimal attributes on Ruby <= 2.5.x
+
+#### 2.2.0
+
+- Allow ActiveSupport 6.0
+- Resolve deprecation messages on Ruby 2.6
+
 #### 2.1.2
 
 - Fix URL processing when frozen
