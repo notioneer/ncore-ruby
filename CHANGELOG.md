@@ -1,3 +1,14 @@
+#### 3.0.0.pre3
+
+- Drop ActiveModel <= 4.1
+- Fix BigDecimal on Ruby <= 2.5
+- Better default output for #as_json
+
+#### 3.0.0.pre2
+
+- Allow ActiveModel/Support 6.0
+- Resolve deprecation messages on Ruby 2.6
+
 #### 3.0.0.pre1
 
 - `#errors` is now always an ActiveModel::Errors instance
