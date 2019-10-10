@@ -97,7 +97,7 @@ module NCore
     def attributes
       Util.deep_clone(@attribs)
     end
-
+    alias_method :as_json, :attributes
 
     def [](attr)
       @attribs[attr]
