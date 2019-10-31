@@ -62,7 +62,7 @@ module NCore
 
 
     def inspect
-      "#<#{self.class}:0x#{self.object_id.to_s(16)}> id: #{id.inspect}, attribs: #{@attribs.except(:id).inspect}, metadata: #{metadata.inspect}"
+      "#<#{self.class}:0x#{'%016x'%self.object_id} id: #{id.inspect}, attribs: #{@attribs.except(:id).inspect}, metadata: #{metadata.inspect}>"
     end
 
   end

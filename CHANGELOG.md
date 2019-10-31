@@ -1,3 +1,9 @@
+#### 3.0.0.pre4
+
+- Base#url -> #resource_path
+- Warn on attr name collision
+- Update CA certificates
+
 #### 3.0.0.pre3
 
 - Drop ActiveModel <= 4.1
