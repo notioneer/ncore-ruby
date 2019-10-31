@@ -5,7 +5,7 @@ module NCore
     module ClassMethods
       def all(params={})
         params = parse_request_params(params)
-        parsed, creds = request(:get, url, params)
+        parsed, creds = request(:get, resource_path, params)
         if parsed[:errors].any?
           raise module_parent::QueryError, parsed[:errors]
         end

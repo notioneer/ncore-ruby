@@ -24,13 +24,13 @@ module NCore
         include Update if types.include? :update
       end
 
-      def url
+      def resource_path
         class_name.underscore.pluralize
       end
     end
 
-    def url
-      "#{self.class.url}/#{CGI.escape((id||'-').to_s)}"
+    def resource_path
+      "#{self.class.resource_path}/#{CGI.escape((id||'-').to_s)}"
     end
 
   end

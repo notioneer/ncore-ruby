@@ -21,13 +21,13 @@ module NCore
         include Update       if types.include? :update
       end
 
-      def url
+      def resource_path
         class_name.underscore
       end
     end
 
-    def url
-      self.class.url
+    def resource_path
+      self.class.resource_path
     end
 
   end

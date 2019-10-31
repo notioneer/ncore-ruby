@@ -22,7 +22,7 @@ module NCore
 
     def update(attribs={})
       params = parse_request_params(attribs, json_root: json_root).reverse_merge credentials: api_creds
-      parsed, @api_creds = request(:put, url, params)
+      parsed, @api_creds = request(:put, resource_path, params)
       load(data: params[json_root]) if parsed[:errors].any?
       load(parsed)
       errors.empty? ? self : false

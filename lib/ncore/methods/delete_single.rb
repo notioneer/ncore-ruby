@@ -11,7 +11,7 @@ module NCore
 
     def delete(params={})
       params = parse_request_params(params).reverse_merge credentials: api_creds
-      parsed, @api_creds = request(:delete, url, params)
+      parsed, @api_creds = request(:delete, resource_path, params)
       load(parsed)
       errors.empty? ? self : false
     end

@@ -19,7 +19,7 @@ module NCore
     def reload(find_params={})
       return if id.blank?
       params = parse_request_params(find_params).reverse_merge credentials: api_creds
-      parsed, @api_creds = request(:get, url, params)
+      parsed, @api_creds = request(:get, resource_path, params)
       @attribs = {}.with_indifferent_access
       load(parsed)
     end
