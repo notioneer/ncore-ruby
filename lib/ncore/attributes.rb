@@ -10,6 +10,7 @@ module NCore
     module ClassMethods
       def attr(*attrs)
         attrs.each do |attr|
+          check_existing_method(attr)
           class_eval <<-AR, __FILE__, __LINE__+1
             def #{attr}
               self[:#{attr}]
@@ -20,6 +21,7 @@ module NCore
 
       def attr_datetime(*attrs)
         attrs.each do |attr|
+          check_existing_method(attr)
           class_eval <<-AD, __FILE__, __LINE__+1
             def #{attr}
               case self[:#{attr}]
@@ -39,6 +41,7 @@ module NCore
 
       def attr_decimal(*attrs)
         attrs.each do |attr|
+          check_existing_method(attr)
           class_eval <<-AD, __FILE__, __LINE__+1
             def #{attr}
               case self[:#{attr}]
@@ -49,6 +52,14 @@ module NCore
               end
             end
           AD
+        end
+      end
+
+      def check_existing_method(attr)
+        if method_defined?(attr) || private_method_defined?(attr)
+          sc = self
+          sc = sc.superclass while sc.superclass != Object
+          warn "Warning: Existing method #{sc.name}##{attr} being overwritten at #{caller[3]}"
         end
       end
 
