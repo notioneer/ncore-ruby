@@ -1,3 +1,8 @@
+#### 3.0.0.pre5
+
+- Make bearer_credential_key allow strings or symbols
+- Update has_many, belongs_to signatures
+
 #### 3.0.0.pre4
 
 - Base#url -> #resource_path
