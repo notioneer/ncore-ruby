@@ -1,9 +1,9 @@
 module NCore
   module Associations
 
-    def has_many(assoc, klass=nil)
+    def has_many(assoc, class_name: nil)
       assoc = assoc.to_s
-      klass ||= "#{module_name}::#{assoc.camelize.singularize}"
+      klass = class_name || "#{module_name}::#{assoc.camelize.singularize}"
       key = "#{attrib_name}_id"
       class_eval <<-M1, __FILE__, __LINE__+1
         def #{assoc}(params={})
@@ -81,9 +81,9 @@ module NCore
       M8
     end
 
-    def belongs_to(assoc, klass=nil)
+    def belongs_to(assoc, class_name: nil)
       assoc = assoc.to_s
-      klass ||= "#{module_name}::#{assoc.camelize}"
+      klass = class_name || "#{module_name}::#{assoc.camelize}"
       class_eval <<-M1, __FILE__, __LINE__+1
         attr :#{assoc}_id
         def #{assoc}(params={})
