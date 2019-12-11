@@ -32,6 +32,12 @@ module MyApi
     # self.bearer_credential_key = :api_key
 
     self.credentials_error_message = %Q{Missing API credentials. Set default credentials using "MyApi.credentials = {api_user: YOUR_API_USER, api_key: YOUR_API_KEY}"}
+
+    # self.verify_ssl = true
+
+    # self.ssl_cert_bundle = 'path/to/bundle.crt'
+
+    # self.logger = Logger.new(STDOUT)
   end
 
 end
