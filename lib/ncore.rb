@@ -10,6 +10,7 @@ require 'pp'
   associations
   attributes
   client
+  client_cache
   collection
   exceptions
   identity

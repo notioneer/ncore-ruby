@@ -7,6 +7,7 @@ module NCore
       include ActiveModel
       include Attributes
       include Client
+      include Client::Cache
       include Identity
       include Lifecycle
       include Util

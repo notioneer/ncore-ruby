@@ -56,6 +56,8 @@ module NCore
         mattr_accessor :ssl_cert_bundle
         self.ssl_cert_bundle = File.dirname(__FILE__)+'/ssl/ca-certificates.crt'
 
+        mattr_accessor :cache_store
+
         mattr_accessor :logger
         self.logger = Logger.new(STDOUT)
       end

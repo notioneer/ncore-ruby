@@ -67,6 +67,7 @@ module NCore
         params = params.with_indifferent_access
         req = params.delete(:request)
         creds = params.delete(:credentials)
+        cache = params.delete(:cache)
         if opts[:json_root]
           if params.key?(opts[:json_root])
             o = params
@@ -78,6 +79,7 @@ module NCore
         end
         o[:request] = req if req
         o[:credentials] = creds if creds
+        o[:cache] = cache if cache
         o
       end
     end

@@ -1,3 +1,16 @@
+#### 3.0.0.pre6
+
+- Add :cache option for requests
+  Set default store at MyApi::Api.cache_store=
+    See example railtie.rb for auto-config
+  Examples:
+    SomeResource.all(cache: true)
+      uses MyApi::Api.cache_store
+    SomeResource.find(id, cache: {expires_in: 5.minutes})
+      uses MyApi::Api.cache_store with specified options
+    SomeResource.find(id, cache: Dalli::Store.new(...))
+      uses provided cache store (with its default options)
+
 #### 3.0.0.pre5
 
 - Make bearer_credential_key allow strings or symbols

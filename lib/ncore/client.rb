@@ -6,11 +6,12 @@ module NCore
 
     module ClassMethods
 
-      # opts - {params: {}, headers: {}, credentials: {}}
+      # opts - {params: {}, headers: {}, credentials: {}, cache: {}}
       #   unknown keys assumed to be :params if :params is missing
       def request(method, url, opts={})
         opts = opts.with_indifferent_access
         request_credentials = opts.delete 'credentials'
+        cache_opts = opts.delete 'cache'
         headers = opts.delete('headers') || {}
         params = opts['params'] || opts
 
@@ -48,7 +49,7 @@ module NCore
           write_timeout: 50,
         }
 
-        response = execute_request(rest_opts)
+        response = execute_request(rest_opts, cache_opts)
         parsed = parse_response(response)
         [parsed, request_credentials]
       end
@@ -87,12 +88,12 @@ module NCore
 
       def build_query_string(params)
         if params.any?
-          query_string = params.map do |k,v|
+          query_string = params.sort.map do |k,v|
             if v.is_a?(Array)
               if v.empty?
                 "#{k.to_s}[]="
               else
-                v.map do |v2|
+                v.sort.map do |v2|
                   "#{k.to_s}[]=#{CGI::escape(v2.to_s)}"
                 end.join('&')
               end
@@ -163,7 +164,7 @@ module NCore
       end
 
 
-      def execute_request(rest_opts)
+      def execute_request(rest_opts, _)
         debug_request rest_opts if debug
 
         tries = 0
