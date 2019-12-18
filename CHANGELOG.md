@@ -1,3 +1,7 @@
+#### 3.0.0.pre7
+
+- Bug fixes
+
 #### 3.0.0.pre6
 
 - Add :cache option for requests

@@ -10,9 +10,10 @@ module NCore
       #   use *::Api.cache_store
       # cache_opts: {...}
       #   use: *::Api.cache_store, with options: {...}
+      #   hint: add  force: true  execute the query and rewrite the cache
       # cache_opts: Store.new
       #   use Store.new as-is
-      def execute_request(req, cache_opts)
+      def execute_request(req, cache_opts=nil)
         case cache_opts
         when true
           store, cache_opts = cache_store, {}
