@@ -45,6 +45,9 @@ module NCore
           def self.bearer_credential_key=(v)
             @@bearer_credential_key = v&.to_s
           end
+          def bearer_credential_key=(v)
+            @@bearer_credential_key = v&.to_s
+          end
         MTH
 
         mattr_accessor :credentials_error_message
