@@ -1,9 +1,15 @@
-#### 3.0.0.pre7
+#### 3.0.0
 
-- Bug fixes
+BREAKING CHANGES
+- Update has_many, belongs_to signatures
+- Rename Base#url -> #resource_path
+- Drop ActiveModel <= 4.1
+- `#errors` is now always an ActiveModel::Errors instance
 
-#### 3.0.0.pre6
+DEPRECATION NOTICE
+- ValidationError is deprecated and will be removed in 3.1.
 
+Other changes
 - Add :cache option for requests
   Set default store at MyApi::Api.cache_store=
     See example railtie.rb for auto-config
@@ -14,43 +20,20 @@
       uses MyApi::Api.cache_store with specified options
     SomeResource.find(id, cache: Dalli::Store.new(...))
       uses provided cache store (with its default options)
-
-#### 3.0.0.pre5
-
 - Make bearer_credential_key allow strings or symbols
-- Update has_many, belongs_to signatures
-
-#### 3.0.0.pre4
-
-- Base#url -> #resource_path
 - Warn on attr name collision
 - Update CA certificates
-
-#### 3.0.0.pre3
-
-- Drop ActiveModel <= 4.1
-- Fix BigDecimal on Ruby <= 2.5
 - Better default output for #as_json
-
-#### 3.0.0.pre2
-
 - Allow ActiveModel/Support 6.0
 - Resolve deprecation messages on Ruby 2.6
-
-#### 3.0.0.pre1
-
-- `#errors` is now always an ActiveModel::Errors instance
+- Add #factory
 - API response :errors may be hash or array
+- Add RecordInvalid#errors
 - Better Ruby and ActiveModel integration
   - #eql?, #==, #hash
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
-- Add #factory
-- Add RecordInvalid#errors
-
-DEPRECATION NOTICE
-- ValidationError is deprecated and will be removed in 3.1.
 
 #### 2.2.1
 
