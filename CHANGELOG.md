@@ -1,3 +1,7 @@
+#### 2.2.2
+
+- Update certs
+
 #### 2.2.1
 
 - Fix decimal attributes on Ruby <= 2.5.x
