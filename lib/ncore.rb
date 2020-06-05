@@ -33,6 +33,7 @@ end
   find
   find_single
   update
+  update_bulk
 ).each do |f|
   require "ncore/methods/#{f}"
 end

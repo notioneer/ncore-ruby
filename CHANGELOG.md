@@ -1,3 +1,7 @@
+#### 3.1.0
+
+- Add .bulk_update and bulk_update!
+
 #### 3.0.0
 
 BREAKING CHANGES
@@ -34,6 +38,10 @@ Other changes
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
+
+#### 2.2.2
+
+- Update certs
 
 #### 2.2.1
 

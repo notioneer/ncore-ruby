@@ -23,6 +23,7 @@ module NCore
         include DeleteBulk if types.include? :delete_bulk
         include Find   if types.include? :find
         include Update if types.include? :update
+        include UpdateBulk if types.include? :update_bulk
       end
 
       def resource_path
