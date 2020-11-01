@@ -35,6 +35,8 @@ module MyApi
 
     # self.verify_ssl = true
 
+    # Uses system/OS bundle by default
+    # self.ssl_cert_bundle = :bundled   # uses excon's included bundle
     # self.ssl_cert_bundle = 'path/to/bundle.crt'
 
     # self.logger = Logger.new(STDOUT)

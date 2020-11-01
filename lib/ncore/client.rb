@@ -202,7 +202,7 @@ module NCore
         rescue Excon::Errors::SocketError => e
           case e.message
           when /Unable to verify certificate/
-            raise module_parent::ConnectionError, "Unable to verify certificate for #{host_for_error rest_opts[:url]} : verify URL or disable SSL certificate verification (insecure)."
+            raise module_parent::ConnectionError, "Unable to verify certificate for #{host_for_error rest_opts[:url]} : verify URL, set ssl_cert_bundle=, or disable SSL certificate verification (insecure)."
           when /Name or service not known/, /No address associated with hostname/
             raise module_parent::ConnectionError, "DNS error for #{host_for_error rest_opts[:url]} : check network and DNS or visit #{status_page}."
           when /Errno::ECONNREFUSED/
@@ -297,17 +297,16 @@ module NCore
 
       def verify_ssl_cert?
         return @verify_ssl_cert unless @verify_ssl_cert.nil?
-        bundle_readable = File.readable?(ssl_cert_bundle)
-        if verify_ssl && bundle_readable
+        if verify_ssl
+          if ssl_cert_bundle
+            bundle_readable = File.readable?(ssl_cert_bundle) rescue false
+            unless bundle_readable
+              raise module_parent::CertificateError, "Unable to read SSL cert bundle #{ssl_cert_bundle}."
+            end
+          end
           @verify_ssl_cert = true
         else
-          m = 'WARNNG: SSL cert verification is disabled.'
-          unless verify_ssl
-            m += " Enable verification with: #{module_parent}::Api.verify_ssl = true."
-          end
-          unless bundle_readable
-            m += " Unable to read CA bundle #{ssl_cert_bundle}."
-          end
+          m = "WARNNG: SSL cert verification is disabled. Enable verification with: #{module_parent}::Api.verify_ssl = true."
           $stderr.puts m
           @verify_ssl_cert = false
         end

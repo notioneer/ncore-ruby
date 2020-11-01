@@ -9,6 +9,7 @@ module NCore
         class AccessDenied < Error ; end
         class AccountInactive < Error ; end
         class AuthenticationFailed < Error ; end
+        class CertificateError < Error ; end
         class ConnectionError < Error ; end
         class RateLimited < Error ; end
         class RecordNotFound < Error ; end

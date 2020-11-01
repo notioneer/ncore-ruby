@@ -1,3 +1,10 @@
+#### 3.2.0
+
+- Use system's CA certificate store by default
+  To use bundled CAs instead:
+    SomeAppName::Api.ssl_cert_bundle = :bundled
+  On failure reading specified bundle, raises exception instead of warning
+
 #### 3.1.0
 
 - Add .bulk_update and bulk_update!
