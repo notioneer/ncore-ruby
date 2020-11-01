@@ -1,3 +1,10 @@
+#### 2.3.0
+
+- Use system's CA certificate store by default (backport from v3.2.0)
+  To use bundled CAs instead:
+    SomeAppName::Api.ssl_cert_bundle = :bundled
+  On failure reading specified bundle, raises exception instead of warning
+
 #### 2.2.2
 
 - Update certs

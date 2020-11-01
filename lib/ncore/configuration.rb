@@ -45,11 +45,32 @@ module NCore
         mattr_accessor :verify_ssl
         self.verify_ssl = true
 
-        mattr_accessor :ssl_cert_bundle
-        self.ssl_cert_bundle = File.dirname(__FILE__)+'/ssl/ca-certificates.crt'
+        mattr_reader :ssl_cert_bundle
+        class_eval <<-MTH
+          def self.ssl_cert_bundle=(v)
+            v = find_excon_bundle if v==:bundled
+            @@ssl_cert_bundle = v
+          end
+          def ssl_cert_bundle=(v)
+            v = find_excon_bundle if v==:bundled
+            @@ssl_cert_bundle = v
+          end
+        MTH
 
         mattr_accessor :logger
         self.logger = Logger.new(STDOUT)
+      end
+
+
+      private
+
+      def find_excon_bundle
+        b = Gem.find_files_from_load_path('../data/cacert.pem').select{|p| p=~/excon/}.first
+        if b
+          b.freeze
+        else
+          raise parent::CertificateError, 'Failed to locate CA cert bundle from excon. Specify a full path instead.'
+        end
       end
 
     end
