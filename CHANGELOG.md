@@ -1,3 +1,11 @@
+#### 3.2.1
+
+DEPRECATION NOTICE
+- Support for ActiveModel < 5.2 is deprecated and will be removed in 3.3.
+
+Other changes
+- Allow ActiveModel 6.1
+
 #### 3.2.0
 
 - Use system's CA certificate store by default
@@ -45,6 +53,13 @@ Other changes
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
+
+#### 2.3.0
+
+- Use system's CA certificate store by default (backport from v3.2.0)
+  To use bundled CAs instead:
+    SomeAppName::Api.ssl_cert_bundle = :bundled
+  On failure reading specified bundle, raises exception instead of warning
 
 #### 2.2.2
 
