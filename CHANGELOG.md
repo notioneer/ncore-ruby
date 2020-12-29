@@ -1,3 +1,7 @@
+#### 2.3.1
+
+- Allow ActiveSupport 6.1
+
 #### 2.3.0
 
 - Use system's CA certificate store by default (backport from v3.2.0)
