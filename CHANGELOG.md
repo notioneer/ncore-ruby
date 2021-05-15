@@ -1,5 +1,6 @@
 #### 3.3.0
 
+- Allow  headers: {}  as part of params/attribs everywhere
 - Drop ActiveModel <= 5.1
 - Remove ValidationError
 

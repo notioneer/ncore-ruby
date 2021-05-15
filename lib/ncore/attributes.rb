@@ -66,6 +66,7 @@ module NCore
       def parse_request_params(params={}, opts={})
         params = params.with_indifferent_access
         req = params.delete(:request)
+        hdr = params.delete(:headers)
         creds = params.delete(:credentials)
         cache = params.delete(:cache)
         if opts[:json_root]
@@ -78,6 +79,7 @@ module NCore
           o = params
         end
         o[:request] = req if req
+        o[:headers] = hdr if hdr
         o[:credentials] = creds if creds
         o[:cache] = cache if cache
         o
