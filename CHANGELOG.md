@@ -1,3 +1,7 @@
+#### 3.3.0
+
+- Drop ActiveModel <= 5.1
+
 #### 3.2.1
 
 DEPRECATION NOTICE
@@ -53,6 +57,10 @@ Other changes
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
+
+#### 2.3.1
+
+- Allow ActiveModel 6.1
 
 #### 2.3.0
 
