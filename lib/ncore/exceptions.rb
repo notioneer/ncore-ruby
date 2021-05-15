@@ -44,9 +44,6 @@ module NCore
         end
 
         class BulkActionError < QueryError ; end
-
-        # DEPRECATED; to be removed in v3.1
-        class ValidationError < QueryError ; end
       INCL
     end
 

@@ -1,6 +1,7 @@
 #### 3.3.0
 
 - Drop ActiveModel <= 5.1
+- Remove ValidationError
 
 #### 3.2.1
 
