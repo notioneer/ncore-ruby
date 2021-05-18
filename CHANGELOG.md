@@ -1,3 +1,7 @@
+#### 3.3.1
+
+- Fix module_parent when using ActiveSupport 5.2
+
 #### 3.3.0
 
 - Allow  headers: {}  as part of params/attribs everywhere
