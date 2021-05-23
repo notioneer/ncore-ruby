@@ -1,3 +1,7 @@
+#### 3.3.2
+
+- Ruby 3.0 compatibility
+
 #### 3.3.1
 
 - Fix module_parent when using ActiveSupport 5.2

@@ -160,10 +160,14 @@ module NCore
     end
 
 
-    def load(data:, errors: nil, metadata: nil)
-      self.metadata = metadata || {}.with_indifferent_access
-      self.errors = parse_errors(errors)
-      data.each do |k,v|
+    def load(args={})
+      raise ArgumentError, "Missing :data" unless args.key?(:data)
+      extra_keys = args.keys - %i(data errors metadata)
+      raise ArgumentError, "Unexpected keys: #{extra_keys.inpsect}" if extra_keys.any?
+
+      self.metadata = args[:metadata] || {}.with_indifferent_access
+      self.errors = parse_errors(args[:errors])
+      args[:data].each do |k,v|
         if respond_to? "#{k}="
           send "#{k}=", self.class.interpret_type(v, api_creds)
         else
