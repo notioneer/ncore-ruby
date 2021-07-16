@@ -1,3 +1,7 @@
+#### 3.3.3
+
+- Handle recursion in #inspect
+
 #### 3.3.2
 
 - Ruby 3.0 compatibility
