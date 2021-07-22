@@ -1,3 +1,7 @@
+#### 3.3.4
+
+- Fix :cache option on Ruby 3.0
+
 #### 3.3.3
 
 - Handle recursion in #inspect

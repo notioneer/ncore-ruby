@@ -26,7 +26,7 @@ module NCore
         end
 
         if store && req[:method] == :get
-          store.fetch request_cache_key(req.slice(:url, :headers)), cache_opts do
+          store.fetch request_cache_key(**req.slice(:url, :headers)), cache_opts do
             super
           end
         else
