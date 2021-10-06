@@ -16,6 +16,7 @@ require 'pp'
   identity
   lifecycle
   util
+  wait
   base
   singleton_base
 ).each do |f|

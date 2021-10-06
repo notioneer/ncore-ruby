@@ -1,3 +1,7 @@
+#### 3.4.0
+
+- Add SomeResource#wait_for and WaitTimeout
+
 #### 3.3.4
 
 - Fix :cache option on Ruby 3.0

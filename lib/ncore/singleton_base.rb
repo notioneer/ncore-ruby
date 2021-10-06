@@ -10,6 +10,7 @@ module NCore
       include Identity
       include Lifecycle
       include Util
+      include Wait
     end
 
     module ClassMethods
