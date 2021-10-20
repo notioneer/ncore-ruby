@@ -1,3 +1,7 @@
+#### 2.3.2
+
+- Allow ActiveSupport 7.0
+
 #### 2.3.1
 
 - Allow ActiveSupport 6.1
