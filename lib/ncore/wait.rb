@@ -14,7 +14,7 @@ module NCore
         cnt += 1
         sleep wait
         reload
-        return true if block.call
+        return self if block.call
       end
       raise self.class.module_parent::WaitTimeout, self
     end
