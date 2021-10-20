@@ -1,3 +1,7 @@
+#### 3.4.1
+
+- Allow ActiveModel 7.0
+
 #### 3.4.0
 
 - Add SomeResource#wait_for and WaitTimeout
