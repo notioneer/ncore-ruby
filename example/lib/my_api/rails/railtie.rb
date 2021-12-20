@@ -1,7 +1,12 @@
 module MyApi
   class Railtie < Rails::Railtie
 
-    config.after_initialize do
+    config.action_dispatch.rescue_responses.merge!(
+      'MyApi::RecordInvalid'  => :unprocessable_entity, # 422
+      'MyApi::RecordNotFound' => :not_found, # 404
+    )
+
+    initializer "my_api.cache_store" do |app|
       MyApi::Api.cache_store = Rails.cache
     end
 
