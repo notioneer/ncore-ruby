@@ -1,3 +1,7 @@
+#### 3.4.2
+
+- Fix SomeResource.all when payload includes 'data' attribute
+
 #### 3.4.1
 
 - Allow ActiveModel 7.0
@@ -83,6 +87,10 @@ Other changes
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
+
+#### 2.3.2
+
+- Allow ActiveSupport 7.0
 
 #### 2.3.1
 

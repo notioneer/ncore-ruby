@@ -12,7 +12,7 @@ module NCore
         Collection.new.tap do |coll|
           coll.metadata = parsed[:metadata]
           parsed[:data].each do |hash|
-            coll << factory(hash.merge(metadata: parsed[:metadata]), creds)
+            coll << factory({data: hash, metadata: parsed[:metadata]}, creds)
           end
         end
       end
