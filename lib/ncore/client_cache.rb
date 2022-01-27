@@ -6,11 +6,12 @@ module NCore
 
       private
 
+      # only caches GET requests with 200..299, 409, 422 responses
       # cache_opts: true
       #   use *::Api.cache_store
       # cache_opts: {...}
       #   use: *::Api.cache_store, with options: {...}
-      #   hint: add  force: true  execute the query and rewrite the cache
+      #   hint: add  force: true  to execute the query and rewrite the cache
       # cache_opts: Store.new
       #   use Store.new as-is
       def execute_request(req, cache_opts=nil)
