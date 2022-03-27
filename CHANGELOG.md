@@ -1,3 +1,7 @@
+#### 3.4.3
+
+- Fix Rails controller reporting of API times
+
 #### 3.4.2
 
 - Fix SomeResource.all when payload includes 'data' attribute

@@ -108,7 +108,9 @@ module NCore
       end
 
       def register_api_runtime(log_sub, title)
-        ControllerRuntime.api_runtime_list += [{log_sub: log_sub, title: title, rt: 0}]
+        unless ControllerRuntime.api_runtime_list.detect{|arl| arl[:log_sub]==log_sub }
+          ControllerRuntime.api_runtime_list += [{log_sub: log_sub, title: title, rt: 0}]
+        end
       end
     end
 
