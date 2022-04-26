@@ -177,9 +177,9 @@ module NCore
               tries += 1
               response = connection.request rest_opts.except(:url)
             rescue Excon::Error::Socket, Excon::Errors::SocketError, Excon::Error::Timeout,
-                Errno::EADDRNOTAVAIL => e
+                Errno::EADDRNOTAVAIL, Errno::ECONNRESET => e
               # retry when keepalive was closed
-              if tries <= 1 #&& e.message =~ /end of file reached/
+              if tries <= 1
                 retry
               else
                 raise e

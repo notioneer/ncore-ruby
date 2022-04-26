@@ -1,3 +1,7 @@
+#### 3.4.4
+
+- Improve keepalive handling
+
 #### 3.4.3
 
 - Fix Rails controller reporting of API times
