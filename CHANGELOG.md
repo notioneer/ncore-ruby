@@ -1,3 +1,8 @@
+#### 3.x
+
+- Allow ActiveModel 7.1
+- Update LogSubscriber for ActiveSupport 7.1
+
 #### 3.4.4
 
 - Improve keepalive handling
@@ -95,6 +100,10 @@ Other changes
   - #model_name
   - #i18n_scope, config via Api.i18n_scope=
   - #cache_key, #cache_version, #cache_key_with_version
+
+#### 2.3.3
+
+- Improve keepalive handling
 
 #### 2.3.2
 

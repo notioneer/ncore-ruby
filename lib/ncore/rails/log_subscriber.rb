@@ -37,11 +37,11 @@ module NCore
       msg = "%s %s" % [http_method, url]
       res = " -> %d (%.1f ms)" % [http_status, event.duration]
 
-      msg = color(msg, ActiveSupport::LogSubscriber::YELLOW, false)
+      msg = color(msg, :yellow)
       if (200..299).include? http_status
-        res = color(res, ActiveSupport::LogSubscriber::GREEN, true)
+        res = color(res, :green, bold: true)
       else
-        res = color(res, ActiveSupport::LogSubscriber::RED, true)
+        res = color(res, :red, bold: true)
       end
 
       if (200..299).include? http_status
