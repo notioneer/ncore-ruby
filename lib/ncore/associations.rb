@@ -1,109 +1,148 @@
 module NCore
   module Associations
 
-    def has_many(assoc, class_name: nil)
-      assoc = assoc.to_s
-      klass = class_name || "#{module_name}::#{assoc.camelize.singularize}"
-      key = "#{attrib_name}_id"
-      class_eval <<-M1, __FILE__, __LINE__+1
-        def #{assoc}(params={})
+    # assoc_name       - plural association name
+    # :association_key - key used by the association to reference the parent
+    #                    defaults to `attrib_name+'_id'`
+    # :class_name      - Module::Class of the child association, as a string
+    def has_many(assoc_name, association_key: nil, class_name: nil)
+      assoc_name = assoc_name.to_s
+      parent_key = association_key&.to_s || "#{attrib_name}_id"
+      klass      = class_name || "#{module_name}::#{assoc_name.camelize.singularize}"
+
+      # def items({})
+      class_eval <<-A1, __FILE__, __LINE__+1
+        def #{assoc_name}(params={})
           return [] unless id
           reload = params.delete :reload
           cacheable = params.except(:credentials, :request).empty?
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
           if cacheable
             # only cache unfiltered, default api call
-            @attribs[:#{assoc}] = (!reload && @attribs[:#{assoc}]) || #{klass}.all(params)
+            @attribs[:#{assoc_name}] = (!reload && @attribs[:#{assoc_name}]) || #{klass}.all(params)
           else
             #{klass}.all(params)
           end
         end
-      M1
-      class_eval <<-M2, __FILE__, __LINE__+1
-        def find_#{assoc.singularize}(aid, params={})
+      A1
+
+      # def find_item(id, {})
+      class_eval <<-F1, __FILE__, __LINE__+1
+        def find_#{assoc_name.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
           #{klass}.find(aid, params)
         end
-      M2
-      # will always return the object; check .errors? or .valid? to see how it went
-      class_eval <<-M3, __FILE__, __LINE__+1
-        def create_#{assoc.singularize}(params={})
+      F1
+
+      # def retrieve_item(id, {})
+      class_eval <<-F2, __FILE__, __LINE__+1
+        def retrieve_#{assoc_name.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
+          #{klass}.retrieve(aid, params)
+        end
+      F2
+
+      # def create_item({})
+      # will always return the object; check .errors? or .valid? to see how it went
+      class_eval <<-C1, __FILE__, __LINE__+1
+        def create_#{assoc_name.singularize}(params={})
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params[:#{parent_key}] = id
           #{klass}.create(params)
         end
-      M3
-      # will always return the object; check .errors? or .valid? to see how it went
-      class_eval <<-M4, __FILE__, __LINE__+1
-        def update_#{assoc.singularize}(aid, params={})
+      C1
+
+      # def create_item!({})
+      class_eval <<-C2, __FILE__, __LINE__+1
+        def create_#{assoc_name.singularize}!(params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
-          #{klass}.update(aid, params)
-        end
-      M4
-      class_eval <<-M5, __FILE__, __LINE__+1
-        def create_#{assoc.singularize}!(params={})
-          raise UnsavedObjectError unless id
-          params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
           #{klass}.create!(params)
         end
-      M5
-      class_eval <<-M6, __FILE__, __LINE__+1
-        def update_#{assoc.singularize}!(aid, params={})
+      C2
+
+      # def update_item(id, {})
+      # will always return the object; check .errors? or .valid? to see how it went
+      class_eval <<-U1, __FILE__, __LINE__+1
+        def update_#{assoc_name.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
+          #{klass}.update(aid, params)
+        end
+      U1
+
+      # def update_item!(id, {})
+      class_eval <<-U2, __FILE__, __LINE__+1
+        def update_#{assoc_name.singularize}!(aid, params={})
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params[:#{parent_key}] = id
           #{klass}.update!(aid, params)
         end
-      M6
+      U2
+
+      # def delete_item(id, {})
       # will always return the object; check .errors? or .valid? to see how it went
-      class_eval <<-M7, __FILE__, __LINE__+1
-        def delete_#{assoc.singularize}(aid, params={})
+      class_eval <<-D1, __FILE__, __LINE__+1
+        def delete_#{assoc_name.singularize}(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
           #{klass}.delete(aid, params)
         end
-      M7
-      class_eval <<-M8, __FILE__, __LINE__+1
-        def delete_#{assoc.singularize}!(aid, params={})
+      D1
+
+      # def delete_item!(id, {})
+      class_eval <<-D2, __FILE__, __LINE__+1
+        def delete_#{assoc_name.singularize}!(aid, params={})
           raise UnsavedObjectError unless id
           params = parse_request_params(params).reverse_merge credentials: api_creds
-          params[:#{key}] = id
+          params[:#{parent_key}] = id
           #{klass}.delete!(aid, params)
         end
-      M8
+      D2
     end
 
-    def belongs_to(assoc, class_name: nil)
-      assoc = assoc.to_s
-      klass = class_name || "#{module_name}::#{assoc.camelize}"
-      class_eval <<-M1, __FILE__, __LINE__+1
-        attr :#{assoc}_id
-        def #{assoc}(params={})
-          return nil unless #{assoc}_id
+    # assoc_name       - singular association name
+    # :association_key - key on this resource used to reference the parent association
+    #                    defaults to `assoc_name+'_id'`
+    # :class_name      - Module::Class of the parent association, as a string
+    def belongs_to(assoc_name, association_key: nil, class_name: nil)
+      assoc_name = assoc_name.to_s
+      parent_key = association_key&.to_s || "#{assoc_name}_id"
+      klass      = class_name || "#{module_name}::#{assoc_name.camelize}"
+
+      # attr :parent_id
+      # def parent({})
+      class_eval <<-P1, __FILE__, __LINE__+1
+        attr :#{parent_key}
+        def #{assoc_name}(params={})
+          return nil unless #{parent_key}
           params = parse_request_params(params).reverse_merge credentials: api_creds
           if params.except(:credentials, :request).empty?
             # only cache unfiltered, default api call
-            @attribs[:#{assoc}] ||= #{klass}.find(#{assoc}_id, params)
+            @attribs[:#{assoc_name}] ||= #{klass}.find(#{parent_key}, params)
           else
-            #{klass}.find(#{assoc}_id, params)
+            #{klass}.find(#{parent_key}, params)
           end
         end
-      M1
-      class_eval <<-M2, __FILE__, __LINE__+1
-        def #{assoc}_id=(v)
-          @attribs[:#{assoc}] = nil unless @attribs[:#{assoc}_id] == v
-          @attribs[:#{assoc}_id] = v
+      P1
+
+      class_eval <<-P2, __FILE__, __LINE__+1
+        def #{parent_key}=(v)
+          @attribs[:#{assoc_name}] = nil unless @attribs[:#{parent_key}] == v
+          @attribs[:#{parent_key}] = v
         end
-        private :#{assoc}_id=
-      M2
+        private :#{parent_key}=
+      P2
     end
 
   end

@@ -1,7 +1,9 @@
-#### 3.x
+#### 3.5.0
 
 - Allow ActiveModel 7.1
 - Update LogSubscriber for ActiveSupport 7.1
+- Associations: add arg :association_key to has_many, belongs_to
+- Associations: has_many now builds retrieve_{assoc}
 
 #### 3.4.4
 
