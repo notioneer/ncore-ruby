@@ -168,7 +168,9 @@ module NCore
       self.metadata = args[:metadata] || {}.with_indifferent_access
       self.errors = parse_errors(args[:errors])
       args[:data].each do |k,v|
-        if respond_to? "#{k}="
+        if k=='metadata' || k=='errors'
+          @attribs[k] = self.class.interpret_type(v, api_creds)
+        elsif respond_to?("#{k}=")
           send "#{k}=", self.class.interpret_type(v, api_creds)
         else
           @attribs[k] = self.class.interpret_type(v, api_creds)

@@ -1,3 +1,8 @@
+#### 3.5.1
+
+- Preserve 'metadata' and 'errors' keys as attributes when inside a standard
+  data payload
+
 #### 3.5.0
 
 - Allow ActiveModel 7.1
