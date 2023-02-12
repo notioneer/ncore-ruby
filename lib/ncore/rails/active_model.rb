@@ -8,11 +8,7 @@ module NCore
       extend  ::ActiveModel::Translation
     end
 
-    if defined?(::Rails)
-      def logger
-        ::Rails.logger
-      end
-    end
+    delegate :logger, to: :class
 
     def new_record?
       !id

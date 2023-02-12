@@ -1,3 +1,7 @@
+#### 3.5.2
+
+- Fix logger=()
+
 #### 3.5.1
 
 - Preserve 'metadata' and 'errors' keys as attributes when inside a standard

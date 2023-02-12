@@ -314,13 +314,13 @@ module NCore
 
       def debug_request(rest_opts)
         return unless logger.debug?
-        logger << <<-DBG
-#{'-=- '*18}
-REQUEST:
-  #{rest_opts[:method].to_s.upcase} #{rest_opts[:url]}
-  #{rest_opts[:headers].map{|h,d| "#{h}: #{d}"}.join("\n  ")}
-  #{rest_opts[:body] || 'nil'}
-DBG
+        logger << <<~DBG
+          #{'-=- '*18}
+          REQUEST:
+            #{rest_opts[:method].to_s.upcase} #{rest_opts[:url]}
+            #{rest_opts[:headers].map{|h,d| "#{h}: #{d}"}.join("\n  ")}
+            #{rest_opts[:body] || 'nil'}
+        DBG
       end
 
       def debug_response(response)
@@ -330,13 +330,13 @@ DBG
         else
           json = JSON.parse(response.body||'', symbolize_names: false) rescue response.body
         end
-        logger << <<-DBG
-RESPONSE:
-  #{response.headers['Status']} | #{response.headers['Content-Type']} | #{response.body.size} bytes
-  #{response.headers.except('Status', 'Connection', 'Content-Type').map{|h,d| "#{h}: #{d}"}.join("\n  ")}
-  #{json.pretty_inspect.split("\n").join("\n  ")}
-#{'-=- '*18}
-DBG
+        logger << <<~DBG
+          RESPONSE:
+            #{response.headers['Status']} | #{response.headers['Content-Type']} | #{response.body.size} bytes
+            #{response.headers.except('Status', 'Connection', 'Content-Type').map{|h,d| "#{h}: #{d}"}.join("\n  ")}
+            #{json.pretty_inspect.split("\n").join("\n  ")}
+          #{'-=- '*18}
+        DBG
       end
 
     end # ClassMethods

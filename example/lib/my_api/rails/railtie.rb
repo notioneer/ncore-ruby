@@ -18,5 +18,9 @@ module MyApi
       end
     end
 
+    initializer "my_api.logger" do |app|
+      MyApi::Api.logger = Rails.logger
+    end
+
   end
 end
