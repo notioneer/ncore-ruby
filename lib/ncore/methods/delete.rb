@@ -14,7 +14,7 @@ module NCore
       # always returns a new object; check .errors? or .valid? to see how it went
       def delete(id, params={})
         raise(module_parent::RecordNotFound, "Cannot delete id=nil") if id.blank?
-        obj = new(id: id)
+        obj = new({id: id})
         obj.delete(params)
         obj
       end

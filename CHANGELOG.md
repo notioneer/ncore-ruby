@@ -1,3 +1,9 @@
+#### 3.6.0
+
+- factory() - add :preload option; make available to resource instances
+- Resource.new() - add :preload option
+  Hint: the first arg (attribs) must be a hash, not kwarg: `new({id: id})`
+
 #### 3.5.2
 
 - Fix logger=()

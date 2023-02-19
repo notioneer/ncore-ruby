@@ -14,7 +14,7 @@ module NCore
       # always returns a new object; check .errors? or .valid? to see how it went
       def update(id, attribs)
         raise(module_parent::RecordNotFound, "Cannot update id=nil") if id.blank?
-        obj = new(id: id)
+        obj = new({id: id})
         obj.update attribs
         obj
       end

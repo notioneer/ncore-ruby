@@ -38,11 +38,11 @@ module NCore
         end
       end
 
-      def factory(parsed, api_creds)
+      def factory(parsed, api_creds, preload: nil)
         if key = (parsed[:data] || parsed)[:object]
-          discover_class(key, self).new(parsed, api_creds)
+          discover_class(key, self).new(parsed, api_creds, preload: preload)
         else
-          new(parsed, api_creds)
+          new(parsed, api_creds, preload: preload)
         end
       end
 
@@ -59,6 +59,9 @@ module NCore
       end
 
     end
+
+
+    delegate :factory, to: :class
 
 
     def inspect

@@ -5,7 +5,7 @@ module NCore
     module ClassMethods
       def find(id, params={})
         raise(module_parent::RecordNotFound, "Cannot find id=nil") if id.blank?
-        o = new(id: id)
+        o = new({id: id})
         o.reload(params)
       end
 
