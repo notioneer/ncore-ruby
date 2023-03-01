@@ -95,10 +95,10 @@ module NCore
     attr_accessor :metadata, :errors
 
 
-    def initialize(attribs={}, api_creds=nil, preload: {})
+    def initialize(attribs={}, api_creds=nil, options={})
       @attribs   = {}.with_indifferent_access
       attribs    = attribs.dup.with_indifferent_access
-      preload    = preload.present? ? preload.dup.with_indifferent_access : nil
+      preload    = options[:preload].present? ? options[:preload].dup.with_indifferent_access : nil
       creds_attr = attribs.delete(:credentials)
       @api_creds = api_creds || creds_attr
 

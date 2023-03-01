@@ -1,8 +1,13 @@
+#### 3.6.1
+
+- Restore usage of Resource.new(some_attr: 'value')
+
 #### 3.6.0
 
 - factory() - add :preload option; make available to resource instances
 - Resource.new() - add :preload option
   Hint: the first arg (attribs) must be a hash, not kwarg: `new({id: id})`
+    (no longer true as of 3.6.1)
 
 #### 3.5.2
 
