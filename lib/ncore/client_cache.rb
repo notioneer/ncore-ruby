@@ -37,10 +37,11 @@ module NCore
 
 
       def request_cache_key(url:, headers:)
+        hdrs = headers.reject{|k,v| k=='X-Request-Id'}.sort
         [ 'ncore',
           url.gsub(/[^a-zA-Z0-9]+/,'-'),
-          Digest::MD5.hexdigest(headers.sort.to_s)
-        ].join ':'
+          Digest::MD5.hexdigest(hdrs.to_s)
+        ].join(':')
       end
 
     end

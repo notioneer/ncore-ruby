@@ -38,6 +38,7 @@ module NCore
       res = " -> %d (%.1f ms)" % [http_status, event.duration]
 
       msg = color(msg, :yellow)
+        # for rails≤70, must exclude :bold param entirely since a Hash is truthy
       if (200..299).include? http_status
         res = color(res, :green, bold: true)
       else
