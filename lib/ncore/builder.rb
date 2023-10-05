@@ -1,7 +1,7 @@
 module NCore
   module Builder
     extend ActiveSupport::Concern
-    
+
     included do
       class_eval <<-INCL, __FILE__, __LINE__+1
         include NCore::Exceptions
@@ -24,7 +24,7 @@ module NCore
 
         class << self
           def configure(&block)
-            Api.instance_eval &block
+            Api.instance_eval(&block)
           end
         end
       INCL

@@ -53,7 +53,7 @@ module NCore
         klass_name = key.to_s.camelize.singularize
         begin
           "#{module_name}::#{klass_name}".constantize
-        rescue NameError => e
+        rescue NameError
           default_klass
         end
       end

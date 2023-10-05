@@ -7,7 +7,7 @@ module NCore
         raise(module_parent::RecordNotFound, "ids must not be empty") if ids.blank?
         params = parse_request_params(params, json_root: json_root)
         params[:ids] = ids
-        parsed, creds = request(:put, resource_path, params)
+        parsed, _creds = request(:put, resource_path, params)
         if parsed[:errors].any?
           raise module_parent::BulkActionError, parsed[:errors]
         else
