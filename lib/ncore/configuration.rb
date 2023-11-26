@@ -38,7 +38,7 @@ module NCore
         self.status_page = 'the status page'
 
         mattr_accessor :auth_header_prefix
-        self.auth_header_prefix = 'X-Api'
+        self.auth_header_prefix = 'x-api'
 
         mattr_reader :bearer_credential_key
         class_eval <<-MTH

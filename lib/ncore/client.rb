@@ -79,7 +79,7 @@ module NCore
         h = {}
         [default_headers, auth_headers(req_credentials), headers].each do |set|
           set.each do |k,v|
-            k = k.to_s.tr('_','-').gsub(%r{(^|-)\w}){$&.upcase}
+            k = k.to_s.tr('_','-').downcase
             h[k] = v.respond_to?(:call) ? v.call : v
           end
         end
@@ -118,7 +118,7 @@ module NCore
 
       # create a new excon client if necessary
       # keeps a pool of the last 10 urls
-      #   in almost all cases this will be more than enough 
+      #   in almost all cases this will be more than enough
       def excon_client(uri)
         u = URI.parse uri
         u.path = ''
@@ -153,6 +153,7 @@ module NCore
       end
 
       def pool
+        # is actually fiber-local
         Thread.current[:ncore_pool] ||= {}
       end
 
@@ -171,7 +172,6 @@ module NCore
         response = nil
         begin
           ActiveSupport::Notifications.instrument(instrument_key, rest_opts) do
-
             connection = excon_client(rest_opts[:url])
             begin
               tries += 1
@@ -286,9 +286,9 @@ module NCore
         creds.inject({}) do |h,(k,v)|
           if v.present?
             if k == bearer_credential_key
-              h["Authorization"] = "Bearer #{v}"
+              h['authorization'] = "Bearer #{v}"
             else
-              h["#{auth_header_prefix}-#{k}"] = v 
+              h["#{auth_header_prefix}-#{k}"] = v
             end
           end
           h
@@ -325,6 +325,7 @@ module NCore
 
       def debug_response(response)
         return unless logger.debug?
+        headers = response.headers.transform_keys(&:downcase)
         if defined? MultiJson
           json = MultiJson.load(response.body||'', symbolize_keys: false) rescue response.body
         else
@@ -332,8 +333,8 @@ module NCore
         end
         logger << <<~DBG
           RESPONSE:
-            #{response.headers['Status']} | #{response.headers['Content-Type']} | #{response.body.size} bytes
-            #{response.headers.except('Status', 'Connection', 'Content-Type').map{|h,d| "#{h}: #{d}"}.join("\n  ")}
+            #{response.status} | #{headers['content-type']} | #{response.body.size} bytes
+            #{headers.except('status', 'connection', 'content-length', 'content-type').map{|h,d| "#{h}: #{d}"}.join("\n  ")}
             #{json.pretty_inspect.split("\n").join("\n  ")}
           #{'-=- '*18}
         DBG

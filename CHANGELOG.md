@@ -1,3 +1,11 @@
+#### 3.7.0
+
+- Change request header names to lowercase
+
+#### 3.6.2
+
+- Ensure cache key is stable
+
 #### 3.6.1
 
 - Restore usage of Resource.new(some_attr: 'value')

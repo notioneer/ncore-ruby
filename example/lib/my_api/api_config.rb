@@ -27,7 +27,7 @@ module MyApi
 
     self.status_page = 'http://my.api.status.page'
 
-    self.auth_header_prefix = 'X-MyApi'
+    self.auth_header_prefix = 'x-myapi'
 
     # self.bearer_credential_key = :api_key
 
