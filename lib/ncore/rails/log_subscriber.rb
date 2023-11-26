@@ -26,6 +26,8 @@ module NCore
       end
     end
 
+    DEBUG_STATUSES = (200..299).to_a + [404, 409, 422]
+
     def log_request(event)
       self.class.runtime += event.duration
 
@@ -45,7 +47,7 @@ module NCore
         res = color(res, :red, bold: true)
       end
 
-      if (200..299).include? http_status
+      if DEBUG_STATUSES.include? http_status
         debug "  #{msg}"
         debug "  #{res}"
       else

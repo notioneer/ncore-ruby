@@ -1,6 +1,7 @@
 #### 3.7.0
 
 - Change request header names to lowercase
+- Log 404, 409, 422 responses at :debug instead of :error
 
 #### 3.6.2
 
