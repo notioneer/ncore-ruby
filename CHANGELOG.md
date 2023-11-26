@@ -1,5 +1,9 @@
 #### 3.7.0
 
+- Allow request params to be or contain ActionController::Parameters
+  Unless MultiJson is present, this changes json generation to use the
+    configured encoder in ActiveSupport::JSON::Encoding.json_encoder instead
+    of directly using ::JSON.
 - Change request header names to lowercase
 - Log 404, 409, 422 responses at :debug instead of :error
 

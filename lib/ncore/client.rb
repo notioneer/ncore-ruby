@@ -26,15 +26,15 @@ module NCore
 
         path = URI.parse(url).path
         if [:get, :head, :delete].include? method
-          qs = build_query_string params
+          qs = build_query_string params.as_json
           url += qs
           path += qs
           payload = nil
         else
           if defined? MultiJson
-            payload = MultiJson.encode params
+            payload = MultiJson.encode params.as_json
           else
-            payload = JSON.generate params
+            payload = params.to_json
           end
         end
 
