@@ -138,6 +138,10 @@ module NCore
           end
           ex_opts = {
             connect_timeout: 10,
+            headers: {
+              'accept'     => '*/*',
+              'user-agent' => "ncore/ruby v#{VERSION}",
+            },
             persistent: true
           }
           if verify_ssl_cert?
