@@ -209,12 +209,14 @@ module NCore
       class_eval <<-P1, __FILE__, __LINE__+1
         attr :#{parent_key}
         def #{assoc_name}(params={})
-          return nil unless #{parent_key}
+          reload = params.delete :reload
           params = parse_request_params(params).reverse_merge credentials: api_creds
           if params.except(:credentials, :request).empty?
             # only cache unfiltered, default api call
-            @attribs[:#{assoc_name}] ||= #{klass}.find(#{parent_key}, params)
+            @attribs[:#{assoc_name}] = nil if reload
+            @attribs[:#{assoc_name}] ||= #{parent_key} && #{klass}.find(#{parent_key}, params)
           else
+            return nil unless #{parent_key}
             #{klass}.find(#{parent_key}, params)
           end
         end
