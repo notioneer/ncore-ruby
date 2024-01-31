@@ -1,6 +1,89 @@
 module NCore
   module Associations
 
+    # assoc_name       - singular association name
+    # :association_key - key used by the association to reference the parent
+    #                    defaults to `attrib_name+'_id'`
+    # :class_name      - Module::Class of the child association, as a string
+    def has_one(assoc_name, association_key: nil, class_name: nil)
+      assoc_name = assoc_name.to_s
+      parent_key = association_key&.to_s || "#{attrib_name}_id"
+      klass      = class_name || "#{module_name}::#{assoc_name.camelize}"
+
+      # def item({})
+      class_eval <<-A1, __FILE__, __LINE__+1
+        def #{assoc_name}(params={})
+          return nil unless id
+          reload = params.delete :reload
+          cacheable = params.except(:credentials, :request).empty?
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params[:#{parent_key}] = id
+          if cacheable
+            # only cache unfiltered, default api call
+            @attribs[:#{assoc_name}] = (!reload && @attribs[:#{assoc_name}]) || #{klass}.first(params)
+          else
+            #{klass}.first(params)
+          end
+        end
+      A1
+
+      # def create_item({})
+      # will always return the object; check .errors? or .valid? to see how it went
+      class_eval <<-C1, __FILE__, __LINE__+1
+        def create_#{assoc_name}(params={})
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params[:#{parent_key}] = id
+          #{klass}.create(params)
+        end
+      C1
+
+      # def create_item!({})
+      class_eval <<-C2, __FILE__, __LINE__+1
+        def create_#{assoc_name}!(params={})
+          raise UnsavedObjectError unless id
+          params = parse_request_params(params).reverse_merge credentials: api_creds
+          params[:#{parent_key}] = id
+          #{klass}.create!(params)
+        end
+      C2
+
+      # def update_item({})
+      # will always return the object; check .errors? or .valid? to see how it went
+      class_eval <<-U1, __FILE__, __LINE__+1
+        def update_#{assoc_name}(params={})
+          raise UnsavedObjectError unless id
+          #{assoc_name}.update(params)
+        end
+      U1
+
+      # def update_item!({})
+      class_eval <<-U2, __FILE__, __LINE__+1
+        def update_#{assoc_name}!(params={})
+          raise UnsavedObjectError unless id
+          #{assoc_name}.update!(params)
+        end
+      U2
+
+      # def delete_item({})
+      # will always return the object; check .errors? or .valid? to see how it went
+      class_eval <<-D1, __FILE__, __LINE__+1
+        def delete_#{assoc_name}(params={})
+          raise UnsavedObjectError unless id
+          #{assoc_name}.delete(params)
+        end
+      D1
+
+      # def delete_item!({})
+      class_eval <<-D2, __FILE__, __LINE__+1
+        def delete_#{assoc_name}!(params={})
+          raise UnsavedObjectError unless id
+          #{assoc_name}.delete!(params)
+        end
+      D2
+    end
+
+
     # assoc_name       - plural association name
     # :association_key - key used by the association to reference the parent
     #                    defaults to `attrib_name+'_id'`
@@ -110,6 +193,7 @@ module NCore
         end
       D2
     end
+
 
     # assoc_name       - singular association name
     # :association_key - key on this resource used to reference the parent association

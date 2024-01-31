@@ -1,5 +1,6 @@
 #### 3.8.0
 
+- Add has_one association helper
 - Make reload() public for singleton resources
 
 #### 3.7.1
