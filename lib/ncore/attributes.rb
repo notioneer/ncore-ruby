@@ -8,6 +8,9 @@ module NCore
 
 
     module ClassMethods
+      # attr(:name, ...)
+      #   adds: obj.name  => raw json type
+      #         obj.name? => bool
       def attr(*attrs)
         attrs.each do |attr|
           check_existing_method(attr)
@@ -15,10 +18,17 @@ module NCore
             def #{attr}
               self[:#{attr}]
             end
+
+            def #{attr}?
+              !! self[:#{attr}]
+            end
           AR
         end
       end
 
+      # attr_datetime(:updated_at, ...)
+      #   adds: obj.updated_at  => Time, or raw json type if not parseable
+      #         obj.updated_at? => bool
       def attr_datetime(*attrs)
         attrs.each do |attr|
           check_existing_method(attr)
@@ -35,10 +45,17 @@ module NCore
             rescue ArgumentError, TypeError
               self[:#{attr}]
             end
+
+            def #{attr}?
+              !! self[:#{attr}]
+            end
           AD
         end
       end
 
+      # attr_decimal(:amount, ...)
+      #   adds: obj.amount  => BigMoney if String, else raw json type
+      #         obj.amount? => bool
       def attr_decimal(*attrs)
         attrs.each do |attr|
           check_existing_method(attr)
@@ -50,6 +67,10 @@ module NCore
               else
                 self[:#{attr}]
               end
+            end
+
+            def #{attr}?
+              !! self[:#{attr}]
             end
           AD
         end

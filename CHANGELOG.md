@@ -3,6 +3,8 @@
 - Add has_one association helper
 - Make belongs_to return existing data even when association_key is blank
 - Make reload() public for singleton resources
+- Optimize calling some_attr?() by defining such methods directly.
+  Previously these calls went through method_missing.
 
 #### 3.7.1
 
