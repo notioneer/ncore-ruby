@@ -19,8 +19,6 @@ module NCore
       'singleton'
     end
 
-    private
-
     def reload(find_params={})
       params = parse_request_params(find_params).reverse_merge credentials: api_creds
       parsed, @api_creds = request(:get, resource_path, params)

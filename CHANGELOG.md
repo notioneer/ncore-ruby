@@ -1,3 +1,7 @@
+#### 3.8.0
+
+- Make reload() public for singleton resources
+
 #### 3.7.1
 
 - Don't send both mixed and lowercase headers for accept, user-agent
