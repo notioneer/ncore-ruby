@@ -11,25 +11,22 @@ module NCore
       # attr(:name, ...)
       #   adds: obj.name  => raw json type
       #         obj.name? => bool
-      def attr(*attrs)
+      def attr(*attrs, predicate: true)
         attrs.each do |attr|
           check_existing_method(attr)
           class_eval <<-AR, __FILE__, __LINE__+1
             def #{attr}
               self[:#{attr}]
             end
-
-            def #{attr}?
-              !! self[:#{attr}]
-            end
           AR
+          attr_boolean :"#{attr}?" if predicate
         end
       end
 
       # attr_datetime(:updated_at, ...)
       #   adds: obj.updated_at  => Time, or raw json type if not parseable
       #         obj.updated_at? => bool
-      def attr_datetime(*attrs)
+      def attr_datetime(*attrs, predicate: true)
         attrs.each do |attr|
           check_existing_method(attr)
           class_eval <<-AD, __FILE__, __LINE__+1
@@ -45,18 +42,15 @@ module NCore
             rescue ArgumentError, TypeError
               self[:#{attr}]
             end
-
-            def #{attr}?
-              !! self[:#{attr}]
-            end
           AD
+          attr_boolean :"#{attr}?" if predicate
         end
       end
 
       # attr_decimal(:amount, ...)
       #   adds: obj.amount  => BigMoney if String, else raw json type
       #         obj.amount? => bool
-      def attr_decimal(*attrs)
+      def attr_decimal(*attrs, predicate: true)
         attrs.each do |attr|
           check_existing_method(attr)
           class_eval <<-AD, __FILE__, __LINE__+1
@@ -68,11 +62,22 @@ module NCore
                 self[:#{attr}]
               end
             end
-
-            def #{attr}?
-              !! self[:#{attr}]
-            end
           AD
+          attr_boolean :"#{attr}?" if predicate
+        end
+      end
+
+      # attr_boolean(:active, :active?, ...)
+      #   adds: obj.active
+      #   adds: obj.active? - in attrs hash, this looks for the key :active, not :active?
+      def attr_boolean(*attrs)
+        attrs.each do |attr|
+          check_existing_method(attr)
+          class_eval <<-AB, __FILE__, __LINE__+1
+            def #{attr}
+              !! self[:#{attr.to_s.sub(/\?$/,'')}]
+            end
+          AB
         end
       end
 

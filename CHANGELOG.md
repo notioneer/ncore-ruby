@@ -1,3 +1,7 @@
+#### 3.8.1
+
+- Add option to disable some_attr?() definition
+
 #### 3.8.0
 
 - Add has_one association helper
