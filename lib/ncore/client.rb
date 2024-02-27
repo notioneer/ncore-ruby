@@ -88,17 +88,26 @@ module NCore
 
       def build_query_string(params)
         if params.any?
-          query_string = params.sort.map do |k,v|
-            if v.is_a?(Array)
+          query_string = params.sort.filter_map do |k,v|
+            case v
+            when Array
               if v.empty?
-                "#{k.to_s}[]="
+                "#{CGI::escape(k.to_s)}[]"
               else
                 v.sort.map do |v2|
-                  "#{k.to_s}[]=#{CGI::escape(v2.to_s)}"
+                  "#{CGI::escape(k.to_s)}[]=#{CGI::escape(v2.to_s)}"
+                end.join('&')
+              end
+            when Hash
+              if v.empty?
+                nil
+              else
+                v.sort.map do |k2, v2|
+                  "#{CGI::escape(k.to_s)}[#{k2}]=#{CGI::escape(v2.to_s)}"
                 end.join('&')
               end
             else
-              "#{k.to_s}=#{CGI::escape(v.to_s)}"
+              "#{CGI::escape(k.to_s)}=#{CGI::escape(v.to_s)}"
             end
           end.join('&')
           "?#{query_string}"

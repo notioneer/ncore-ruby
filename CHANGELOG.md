@@ -1,6 +1,7 @@
 #### 3.9.0
 
 - Add inspection filter for attributes
+- Fix generation of query params when values are Hashes
 
 #### 3.8.1
 
