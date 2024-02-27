@@ -7,10 +7,13 @@ module NCore
       include ActiveModel
       include Attributes
       include Client
+      include FilterAttributes
       include Identity
       include Lifecycle
       include Util
       include Wait
+
+      self.filter_attributes = []
     end
 
     module ClassMethods

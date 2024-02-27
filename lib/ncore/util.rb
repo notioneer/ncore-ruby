@@ -63,18 +63,5 @@ module NCore
 
     delegate :factory, to: :class
 
-
-    def inspect
-      base = "#{self.class}:0x#{'%016x'%self.object_id} id: #{id.inspect}"
-      @@inspect_chain ||= []
-      return "#<#{base}, ...>" if @@inspect_chain.include? self
-      begin
-        @@inspect_chain.push self
-        "#<#{base}, attribs: #{@attribs.except(:id).inspect}, metadata: #{metadata.inspect}>"
-      ensure
-        @@inspect_chain.pop
-      end
-    end
-
   end
 end

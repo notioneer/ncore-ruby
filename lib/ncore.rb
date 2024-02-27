@@ -15,6 +15,7 @@ require 'pp'
   exceptions
   identity
   lifecycle
+  filter_attributes
   util
   wait
   base

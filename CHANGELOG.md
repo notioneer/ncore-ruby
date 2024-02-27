@@ -1,3 +1,7 @@
+#### 3.9.0
+
+- Add inspection filter for attributes
+
 #### 3.8.1
 
 - Add option to disable some_attr?() definition

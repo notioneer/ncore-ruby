@@ -1,17 +1,20 @@
 module NCore
   module Base
     extend ActiveSupport::Concern
-    
+
     included do
       extend Associations
       include ActiveModel
       include Attributes
       include Client
       include Client::Cache
+      include FilterAttributes
       include Identity
       include Lifecycle
       include Util
       include Wait
+
+      self.filter_attributes = []
     end
 
     module ClassMethods
