@@ -222,9 +222,13 @@ module NCore
         end
       P1
 
+      # private def parent_id=(val)
+      # if :parent_key changes, clear memoized association
       class_eval <<-P2, __FILE__, __LINE__+1
         def #{parent_key}=(v)
-          @attribs[:#{assoc_name}] = nil unless @attribs[:#{parent_key}] == v
+          if @attribs[:#{parent_key}] != v and @attribs[:#{assoc_name}]&.id != v
+            @attribs[:#{assoc_name}] = nil
+          end
           @attribs[:#{parent_key}] = v
         end
         private :#{parent_key}=

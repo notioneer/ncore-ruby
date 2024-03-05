@@ -1,3 +1,7 @@
+#### 3.9.1
+
+- Fix clearing of memoized association when assoc_id changes
+
 #### 3.9.0
 
 - Add inspection filter for attributes

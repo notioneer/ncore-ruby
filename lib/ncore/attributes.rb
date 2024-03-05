@@ -201,7 +201,7 @@ module NCore
       args[:data].each do |k,v|
         if k=='metadata' || k=='errors'
           @attribs[k] = self.class.interpret_type(v, api_creds)
-        elsif respond_to?("#{k}=")
+        elsif respond_to?("#{k}=", true)
           send "#{k}=", self.class.interpret_type(v, api_creds)
         else
           @attribs[k] = self.class.interpret_type(v, api_creds)
