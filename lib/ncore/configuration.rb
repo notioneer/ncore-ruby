@@ -10,7 +10,17 @@ module NCore
     module ClassMethods
 
       def init_config_options
-        mattr_accessor :default_url
+        mattr_writer :default_url
+        class_eval <<-MTH
+          def self.default_url
+            self.default_url = @@default_url.call if @@default_url.respond_to? :call
+            @@default_url
+          end
+          def default_url
+            self.default_url = @@default_url.call if @@default_url.respond_to? :call
+            @@default_url
+          end
+        MTH
         self.default_url = 'https://api.example.com/v1/'
 
         mattr_accessor :default_headers
@@ -20,7 +30,17 @@ module NCore
           user_agent: "NCore/ruby v#{VERSION}"
         }
 
-        mattr_accessor :credentials
+        mattr_writer :credentials
+        class_eval <<-MTH
+          def self.credentials
+            self.credentials = @@credentials.call if @@credentials.respond_to? :call
+            @@credentials
+          end
+          def credentials
+            self.credentials = @@credentials.call if @@credentials.respond_to? :call
+            @@credentials
+          end
+        MTH
 
         mattr_accessor :debug
         self.debug = false

@@ -1,5 +1,6 @@
 #### 3.10.0
 
+- Allow Api.default_url and Api.credentials to be lazy loaded
 - Fix detection of missing credentials
 - Clarify Ruby 2.7 as minimum in gemspec; for earlier Rubies, lock to < 3.9
 
