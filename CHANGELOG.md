@@ -1,3 +1,7 @@
+#### 3.10.0
+
+- Clarify Ruby 2.7 as minimum in gemspec; for earlier Rubies, lock to < 3.9
+
 #### 3.9.1
 
 - Fix clearing of memoized association when assoc_id changes
