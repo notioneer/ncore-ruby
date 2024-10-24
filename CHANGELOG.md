@@ -1,5 +1,6 @@
 #### 3.10.0
 
+- Fix detection of missing credentials
 - Clarify Ruby 2.7 as minimum in gemspec; for earlier Rubies, lock to < 3.9
 
 #### 3.9.1

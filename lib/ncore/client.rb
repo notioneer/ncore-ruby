@@ -58,7 +58,7 @@ module NCore
       private
 
       def retrieve_credentials
-        if credentials.blank?
+        if credentials.blank? || credentials.all?{|_,v| v.blank? }
           raise module_parent::Error, credentials_error_message
         end
         credentials
