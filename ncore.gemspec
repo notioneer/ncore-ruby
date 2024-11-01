@@ -20,8 +20,8 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.7'
 
-  spec.add_dependency 'activemodel', '>= 5.2', '< 7.2'
-  spec.add_dependency 'excon', '~> 0.32'
+  spec.add_dependency 'activemodel', '>= 5.2', '< 7.3'
+  spec.add_dependency 'excon', '< 2'
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"

@@ -1,3 +1,7 @@
+#### 3.11.0
+
+- Allow ActiveModel 7.2, Excon 1.x
+
 #### 3.10.0
 
 - Allow Api.default_url and Api.credentials to be lazy loaded
