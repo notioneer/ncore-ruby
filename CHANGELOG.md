@@ -1,3 +1,7 @@
+#### 3.12.0
+
+- Allow ActiveModel 8.0
+
 #### 3.11.0
 
 - Allow ActiveModel 7.2, Excon 1.x
