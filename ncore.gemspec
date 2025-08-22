@@ -13,6 +13,11 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://notioneer.com/'
   spec.license       = "MIT"
 
+  spec.metadata = {
+    'source_code_uri' => 'https://github.com/notioneer/ncore-ruby',
+    'changelog_uri' => 'https://github.com/notioneer/ncore-ruby/blob/master/CHANGELOG.md'
+  }
+
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
@@ -20,7 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.7'
 
-  spec.add_dependency 'activemodel', '>= 5.2', '< 8.1'
+  spec.add_dependency 'activemodel', '>= 5.2', '< 8.2'
   spec.add_dependency 'excon', '< 2'
 
   spec.add_development_dependency "bundler"

@@ -1,3 +1,7 @@
+#### 3.13.0
+
+- Allow ActiveModel 8.1
+
 #### 3.12.0
 
 - Allow ActiveModel 8.0
